@@ -22,13 +22,13 @@ _A project to expand NodeJS and Web Dev. skills_
 + Better understand how MongoDB stores data [and how to query it]
 + 
 
-#### Challenges:
+#### Challenges Faced:
 + Not placing the carriage before the horse (i.e., styling before functionality)
 + Fundamentally understanding routing and implementation between NodeJS/AngularJS
-- Store form data to Database after button press -> better understand MongoDB
++ Store form data to Database after button press -> better understand MongoDB
 + Front-end design; learning basic Bootstrap so I can minimize time spent on UI
 + Starting/gaining momentum while looking at the project as a whole and having come from working a full time job already 
-- Understand better ng-route and templateUrl,controller
++ Understand better ng-route and templateUrl,controller
 + Have functions run as soon as page loads and within $interval
 + Dig deeper into how information is passed through functions and between Express and Angular
 
