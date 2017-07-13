@@ -1,0 +1,31 @@
+{
+  "name": "flutter",
+  "version": "1.0.1",
+  "description": "A Twitter clone to learn stuff",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattbrazza/Flutter.git"
+  },
+  "homepage": "https://github.com/mattbrazza/Flutter",
+  "bugs": {
+    "url": "https://github.com/mattbrazza/Flutter/issues"
+  },
+  "keywords": [
+    "Twitter Clone",
+    "NodeJS",
+    "AngularJS",
+    "MEAN Stack"
+  ],
+  "author": "mattbrazza",
+  "license": "ISC",
+  "engines": {
+    "node": ">=8.1.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.11.2"
+  }
+}
+

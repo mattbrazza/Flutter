@@ -1,0 +1,42 @@
+<div class="container"> <!-- TimeLine View -->
+
+<!--
+<h3>This is the TimeLine</h3>
+
+<div ng-model="currUser">
+  <h5>{{ currUser.fullname }}</h5>
+  <b>${{ currUser.username  }}</b>
+  <small>{{ currUser.tagline }}</small>
+</div>
+-->
+<center><h3>CURRENT TIMELINE</h3></center>
+<!-- <div ng-repeat="flut in fluts"
+    style="width: 500px; margin: 4px auto; border: 1px solid black"> -->
+
+<div class="table-responsive">
+<table class="table table-striped">
+  <thead><tr>
+    <th>USER</th>
+    <th>FLUT</th></tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="flut in fluts">
+      <td>{{ flut.username }}</td>
+      <td>{{ flut.text }}<br/>
+        <small>[{{ flut.likes.count }}] -- 
+                {{ flut.postDate | date:'H:mm:ss dd MMM yy Z' }}</small>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!--
+  <b>{{ flut.username }}</b><br/>
+  <span>{{ flut.text }}</span><br/>
+  <small>[{{ flut.likes.count }}] -
+    {{ flut.postDate | date:'H:mm:ss dd MMM yy Z' }}</small>
+-->
+
+</div> <!-- END Timeline View -->
+
