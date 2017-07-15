@@ -6,15 +6,22 @@
     <div class="row">
     <div class="col-md-3 col-md-offset-1">
       <div class="thumbnail">
-        <img ng-src="http://{{ user.profPicUrl }}" alt="Profile Pic"/>
+        <img ng-src="{{ user.profPicUrl }}" alt="Profile Pic"/>
         <div class="caption">
-          <p>{{ user.dispName }}</p>
+          <center>
+          <p>
+            <h3>{{ user.dispName }}</h3>
+            <span>{{ user.tagline }}</span><br/>
+          </p>
           <p>
             <span class="glyphicon glyphicon-user"></span>
-              {{ user.followers.count }}<br/>
-            <small>Joined: {{ user.joinDate | date:'dd MM yy' }}</small>
+            <span>Followers: {{ user.followers.count }}</span><br/>
+            <span class="glyphicon glyphicon-user"></span>
+            <span>Following: {{ user.following.count }}</span><br/>
+            <small>Joined: {{ user.joinDate | date:'dd-MMM \'yy' }}</small>
           </p>
-          <p><a ng-click="" class="btn btn-primary" role="button">Update</a></p>
+          </center>
+          <a ng-click="update()" class="disabled btn btn-primary btn-sm btn-block" role="buton">Save Modifications</a>
         </div>
       </div>
     </div>
@@ -23,56 +30,35 @@
       <form class="form-horizontal">
 
         <div class="form-group">
-          <label class="control-label col-sm-2" for="username">Username:</label>
-          <div class="col-sm-10">
-          <span class="form-control">{{ user.username }}</span>
-          <input placeholder="{{ user.username }}" type="text" class="form-control" id="username"/>
+          <label class="control-label col-sm-4" for="username">Username:</label>
+          <div class="col-sm-8">
+          <input ng-model="user.username" type="text" class="form-control" id="username"/>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="control-label col-sm-2" for="dispName">Display Name:</label>
-          <div class="col-sm-10">
-          <span class="form-control">{{ user.dispName }}</span>
-          <input placeholder="{{ user.dispName }}" type="text" class="form-control" id="dispName"/>
+          <label class="control-label col-sm-4" for="dispName">Display Name:</label>
+          <div class="col-sm-8">
+          <input ng-model="user.dispName" type="text" class="form-control" id="dispName"/>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="control-label col-sm-2" for="email">Email:</label>
-          <div class="col-sm-10">
-          <span class="form-control">{{ user.email }}</span>
-          <input placeholder="{{ user.email }}" type="email" class="form-control" id="email"/>
+          <label class="control-label col-sm-4" for="email">Email:</label>
+          <div class="col-sm-8">
+          <input ng-model="user.email" type="email" class="form-control" id="email"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="tagline">Tagline:</label>
+          <div class="col-sm-8">
+          <input ng-model="user.tagline" type="text" class="form-control" id="tagline"/>
           </div>
         </div>
 
       </form>
     </div>
-    </div> <!-- row -->
-
-
-    <div class="row">
-      <div class="col-md-4 col-md-offset-1">
-        <center><h3>Sign-up Here</h3></center>
-        <div class="well">
-        <input type="text" ng-model="new_username" class="form-control" placeholder="Username"/>
-        <input type="text" ng-model="new_email" class="form-control" placeholder="Email"/>
-        <input type="password" ng-model="new_pwd1" class="form-control" placeholder="Password"/>
-        <input type="password" ng-model="new_pwd2" class="form-control" placeholder="Confirm pwd"/>
-        <br/><button ng-click="signup()" class="btn btn-default">Submit</button>
-        </div>
-      </div>
-
-<div class="col-md-1 hidden-sm hidden-xs" style="height: 400px; border-right: 1px dashed black"></div>
-
-     <div class="col-md-4 col-md-offset-1">
-        <center><h3>Log-in Here</h3></center>
-        <div class="well">
-        <input type="text" ng-model="username" class="form-control" placeholder="Username or Email"/>
-        <input type="password" ng-model="password" class="form-control" placeholder="Password"/>
-        <br/><button ng-click="login()" class="btn btn-default">Submit</button>
-        </div>
-     </div>
     </div> <!-- row -->
 
 </div> <!-- END Entrance Controller -->

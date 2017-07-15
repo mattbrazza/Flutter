@@ -31,6 +31,7 @@ _A project to expand NodeJS and Web Dev. skills_
 + Understand better ng-route and templateUrl,controller
 + Have functions run as soon as page loads and within $interval
 + Dig deeper into how information is passed through functions and between Express and Angular
++ CATCHING TYPOS IN A TIMELY MATTER!
 
 --- --- --- --- --- --- --- --- --- --- --- ---
 ### Stream of Consciousness:
@@ -41,5 +42,7 @@ I then started to look at various YouTube videos about how to use NodeJS with Mo
 I now had a server.js that initialized a NodeJS server that would listen for GET/POST requests to some urls and then present a webpage/controller associated with the request. With all this fairly stable, I moved on to use the database to CRUD some data, but that hit a wall fairly fast in just the Create/Read part...  
 I realized I was not fully aware how data was being passed from the Angular front-end to the Node/Express back-end and then how to save it to MongoDB (which I was using mlab to handle the database portion). I had to step back and dive deeper into some tutorials and the Mongoose and Express documentation. Soon enough, I had a small NodJS sandbox directory where I was testing mongoose actions and make sure I understood how documents/schemas/models worked; once I had this, I moved back to Express and started so see positive results.  
 I removed some code styling and paradigms to make sure that I knew what was necessary code and what was optimization or stylistic choices. I also renamed the "app" used in AngularJS and ExpressJS to "anApp" and "exApp", respectively (an=Angular, ex=Epxress) - again, but to a lesser degree, making sure I was grapsing what was being done by Express and what was being done by Angular, though I think that is more intuative.  
-I have spent a lot of days redoing huge chunks of my code over and over again to better understand how the pieces work and to try and understand the best way to setup my workspace for readibility and functionality. At first, I felt that I was spinning my wheels, but as I start to really grasps some key concepts, it was time well spent.
+I have spent a lot of days redoing huge chunks of my code over and over again to better understand how the pieces work and to try and understand the best way to setup my workspace for readibility and functionality. At first, I felt that I was spinning my wheels, but as I start to really grasps some key concepts, it was time well spent.  
+I am starting to get more comfortable with letting go control over all the aspects of my code base and let libraries/frameworks take control; primarily implementing Bootstrap with minimal knowledge at first and just trusting it to do its job.  
+
 

@@ -15,7 +15,6 @@ function($scope,$http,$location){
     };
     $http.post('entry', request).then(
       function(response){
-//        console.log('submitted entry: ', response.data);
         if (response.data.success) {
           $location.path('/timeline');
         } else { console.log('>>>>WRONG CREDENTIALS'); }
@@ -42,9 +41,8 @@ function($scope,$http,$location){
     };
     $http.post('addUser', request).then(
       function(response){
-//        console.log('>>AU-REP: ', response.data);
         if (response.data.success) {
-          $location.path('/timeline');
+          $location.path('/profile');
         } else { console.log('>>>>userFailer'); }
       },
       function(err){

@@ -10,6 +10,10 @@ anApp.config(['$routeProvider', function($routeProvider){
     templateUrl: 'app/profile.html',
     controller: 'profileCtrl'
   })
+  .when('/profile/:username', {
+    templateUrl: 'app/profile.html',
+    controller: 'profileCtrl'
+  })
   .when('/timeline', {
     templateUrl: 'app/timeline.html',
     controller: 'timelineCtrl'

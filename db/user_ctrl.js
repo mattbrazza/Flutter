@@ -6,7 +6,8 @@ const UserSchema = new Schema({
   username: { type: String, lowercase: true },
   email: { type: String, lowercase: true },
   password: String,
-  dispName: String,
+  dispName: { type: String, default: "" },
+  tagline: { type: String, default: "" },
   following: {
     count: {type: Number, default: 0, min: 0},
     users: [{type: Schema.ObjectId, ref: 'User'}]
@@ -24,19 +25,21 @@ const User = mongoose.model('User', UserSchema);
 // CREATE USER  -- save()
 module.exports.createUser = function(userData, callback){
   let schemaData = {
-    username: userData.username || "NOTENTERED",
-    email: userData.email || "NOTENTERED",
-    password: userData.password || "NOTENTERED",
-    dispName: userData.dispName || "NOTENTERED",
-    profPicUrl: userData.picUrl || "lorempixel.com/80/80"
-   };
+    username: userData.username || "NOT_ENTERED",
+    email: userData.email || "NOT_ENTERED",
+    password: userData.password || "NOT_ENTERED",
+    profPicUrl: userData.picUrl || "http://lorempixel.com/80/80"
+  };
   let user = new User(schemaData);
   user.save(callback);
 };
 
 // READ USER    -- find(), findById(), findOne()
-module.exports.readUser = function(id, callback){
+module.exports.readUserById = function(id, callback){
   User.findById(id).exec(callback);
+};
+module.exports.readUserByName = function(username, callback){
+  User.findOne({'username': username}).exec(callback);
 };
 
 // UPDATE USER  -- update(), findOneAndUpdate()

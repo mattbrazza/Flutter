@@ -38,9 +38,21 @@ exApp.get('/timeline', function(req, res){
 exApp.get('/profile', function(req, res){
   console.log('IN SERVER-PROF: ', req.body);
   let userId = '596a6352b3c9b44fb452873b';
-  userController.readUser(userId, function(err, user){
+  userController.readUserById(userId, function(err, user){
     if (err) { console.error(err); }
     else { res.json(user); }
+  });
+});
+
+exApp.get('/profile/:username', function(req, res){
+console.log('IN SPUN: ', req.body);
+//  console.log('IN SERVER-PROF-(', req.param.username, '): ', req.body);
+  userController.readUserByName(req.params.username, function(err, user){
+    if (err) { console.error(err); }
+    else if (!user) { console.error('>>>>NO USER FOUND!!'); }
+    else { 
+console.log('RETURNING: ', user);
+res.json(user); }
   });
 });
 
