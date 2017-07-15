@@ -20,7 +20,7 @@
   "author": "mattbrazza",
   "license": "ISC",
   "engines": {
-    "node": ">=8.1.2"
+    "node": "^8.1.2"
   },
   "dependencies": {
     "body-parser": "^1.17.2",

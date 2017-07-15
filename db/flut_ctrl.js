@@ -1,17 +1,12 @@
+// FLUT MONGO DB SCHEMA AND CONTROLLER
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const FlutSchema = new Schema({
   username: String,
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
+  user: { type: Schema.ObjectId, ref: 'User' },
   text: String,
-  postDate: {
-    type: Date,
-    default: Date.now
-  },
+  postDate: { type: Date, default: Date.now },
   likes: {
     count: {type: Number, default: 0, min: 0},
     users: [{type: Schema.ObjectId, ref: 'User'}]

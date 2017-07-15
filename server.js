@@ -11,6 +11,7 @@ mongoose.connect(process.env.MONGODB_URI);
 exApp.use('/app', express.static(__dirname + '/app'));
 exApp.use(bodyParser.json());
 const flutController = require('./db/flut_ctrl.js');
+const userController = require('./db/user_ctrl.js');
 
 // ROUTING
 exApp.get('/', function(req, res){
@@ -18,7 +19,7 @@ exApp.get('/', function(req, res){
 });
 
 exApp.post('/entry', function(req, res){
-  console.log('IN SERVER-POST: ', req.body);
+  console.log('IN SERVER-ENTRY: ', req.body);
   let result = {'success': false};
   if (req.body.username === 'user1') {
     if (req.body.password === 'pass') {
@@ -34,6 +35,19 @@ exApp.get('/timeline', function(req, res){
   });
 });
 
+exApp.post('/addUser', function(req, res){
+  console.log('IN SERVER-ADDU: ', req.body);
+  let result = {'success': false};
+  userController.createUser(req.body, function(err, user){
+    if (err) { console.error(err); }
+    else {
+//      console.log(user);
+      // TODO: persist user during session (Storage vs Cookie ?)
+      result = {'success': true};
+      res.json(result);
+    }
+  });
+});
 
 // RUN IT
 const PORT_NO = process.env.PORT_NO || 3000;
