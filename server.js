@@ -35,6 +35,15 @@ exApp.get('/timeline', function(req, res){
   });
 });
 
+exApp.get('/profile', function(req, res){
+  console.log('IN SERVER-PROF: ', req.body);
+  let userId = '596a6352b3c9b44fb452873b';
+  userController.readUser(userId, function(err, user){
+    if (err) { console.error(err); }
+    else { res.json(user); }
+  });
+});
+
 exApp.post('/addUser', function(req, res){
   console.log('IN SERVER-ADDU: ', req.body);
   let result = {'success': false};

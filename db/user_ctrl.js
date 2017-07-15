@@ -21,7 +21,7 @@ const UserSchema = new Schema({
 
 const User = mongoose.model('User', UserSchema);
 
-// CREATE USER
+// CREATE USER  -- save()
 module.exports.createUser = function(userData, callback){
   let schemaData = {
     username: userData.username || "NOTENTERED",
@@ -35,6 +35,10 @@ module.exports.createUser = function(userData, callback){
 };
 
 // READ USER    -- find(), findById(), findOne()
+module.exports.readUser = function(id, callback){
+  User.findById(id).exec(callback);
+};
+
 // UPDATE USER  -- update(), findOneAndUpdate()
 // DELETE USER  -- remove()
 

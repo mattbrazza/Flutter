@@ -6,6 +6,10 @@ anApp.config(['$routeProvider', function($routeProvider){
     templateUrl: 'app/entrance.html',
     controller: 'entryCtrl'
   })
+  .when('/profile', {
+    templateUrl: 'app/profile.html',
+    controller: 'profileCtrl'
+  })
   .when('/timeline', {
     templateUrl: 'app/timeline.html',
     controller: 'timelineCtrl'
