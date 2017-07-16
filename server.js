@@ -20,13 +20,16 @@ exApp.get('/', function(req, res){
 
 exApp.post('/entry', function(req, res){
   console.log('IN SERVER-ENTRY: ', req.body);
-  let result = {'success': false};
-  if (req.body.username === 'user1') {
-    if (req.body.password === 'pass') {
-        result = {'success': true};
-    } else {}
-  } else {}
-  res.json(result);
+  userController.readUserByName(req.body.username, function(err, user) {
+    if (err) { console.error(err); }
+    else if (!user) { console.err('no user found'); }
+    else {
+      if (req.body.password === user.password) {
+        let userData = { id: user._id, username: user.username };
+        res.json(userData);
+      } else { console.error('password is incorrect'); }
+    }
+  });
 });
 
 exApp.get('/timeline', function(req, res){

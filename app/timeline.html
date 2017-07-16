@@ -1,18 +1,19 @@
 <div class="container"> <!-- TimeLine View -->
 
-<!--
-<h3>This is the TimeLine</h3>
+<div class="row">
+  <center><h3>CREATE A FLUT</h3></center>
+    <div class="col-md-8 col-md-offset-2">
+    <div class="well">
+      <div class="col-md-8 col-md-offset-1">
+        <input ng-model="flutText" placeholder="Enter Flut" class="form-control" type="text"/>
+      </div>
+      <button ng-click="submitFlut()" class="btn btn-primary">Submit</button>
+    </div>
+    </div>
+</div> <!-- row -->
 
-<div ng-model="currUser">
-  <h5>{{ currUser.fullname }}</h5>
-  <b>${{ currUser.username  }}</b>
-  <small>{{ currUser.tagline }}</small>
-</div>
--->
+<div class="row">
 <center><h3>CURRENT TIMELINE</h3></center>
-<!-- <div ng-repeat="flut in fluts"
-    style="width: 500px; margin: 4px auto; border: 1px solid black"> -->
-
 <div class="table-responsive">
 <table class="table table-striped">
   <thead><tr>
@@ -30,13 +31,7 @@
   </tbody>
 </table>
 </div>
-
-<!--
-  <b>{{ flut.username }}</b><br/>
-  <span>{{ flut.text }}</span><br/>
-  <small>[{{ flut.likes.count }}] -
-    {{ flut.postDate | date:'H:mm:ss dd MMM yy Z' }}</small>
--->
+</div> <!-- row -->
 
 </div> <!-- END Timeline View -->
 

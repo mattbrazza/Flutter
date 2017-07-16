@@ -15,14 +15,13 @@ function($scope,$http,$location){
     };
     $http.post('entry', request).then(
       function(response){
-        if (response.data.success) {
+        if (response.data) {
           $location.path('/timeline');
         } else { console.log('>>>>WRONG CREDENTIALS'); }
       },
       function(err){ console.error(err); }
     );
   };
-
 
   $scope.signup = function(){
     if (!$scope.new_username || !$scope.new_email ||
