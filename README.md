@@ -6,6 +6,7 @@ _A project to expand NodeJS and Web Dev. skills_
 + NodeJS (with ExpressJS, Body-Parser)
 + MongoDB (with MongooseJS)
 + AngularJS (with ngRoute)
++ Bootstrap
 
 #### Goals:
 + Expand knowledge of NodeJS (Vanilla vs ExpressJS)
