@@ -19,7 +19,6 @@ exApp.get('/', function(req, res){
 });
 
 exApp.post('/entry', function(req, res){
-  console.log('IN SERVER-ENTRY: ', req.body);
   userController.readUserByName(req.body.username, function(err, user) {
     if (err) { console.error(err); }
     else if (!user) { console.err('no user found'); }
@@ -38,13 +37,21 @@ exApp.get('/timeline', function(req, res){
   });
 });
 
+exApp.post('/flut/add', function(req, res){
+  console.log('FLUT-ADD: ', req.body);
+  flutController.createFlut(req.body, function(err, flut){
+    if (err) { console.error(err); }
+    else { res.json(flut); }
+  });
+});
+
 exApp.get('/profile', function(req, res){
   console.log('IN SERVER-PROF: ', req.body);
-  let userId = '596a6352b3c9b44fb452873b';
-  userController.readUserById(userId, function(err, user){
-    if (err) { console.error(err); }
-    else { res.json(user); }
-  });
+//  let userId = '596a6352b3c9b44fb452873b';
+//  userController.readUserById(userId, function(err, user){
+//    if (err) { console.error(err); }
+//    else { res.json(user); }
+//  });
 });
 
 exApp.get('/profile/:username', function(req, res){

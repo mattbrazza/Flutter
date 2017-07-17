@@ -25,7 +25,7 @@
       <td>{{ flut.username }}</td>
       <td>{{ flut.text }}<br/>
         <small>[{{ flut.likes.count }}] -- 
-                {{ flut.postDate | date:'H:mm:ss dd MMM yy Z' }}</small>
+                {{ flut.postDate | date:"H:mm:ss dd-MMM ''''yy Z" }}</small>
       </td>
     </tr>
   </tbody>

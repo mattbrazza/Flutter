@@ -15,6 +15,14 @@ const FlutSchema = new Schema({
 
 const Flut = mongoose.model('Flut', FlutSchema);
 
+// CREATE FLUT
+module.exports.createFlut = function(flutData, callback){
+//  let schemaData = {};
+  let flut = new Flut(flutData);
+  flut.save(callback);
+};
+
+// READ FLUTS
 module.exports.getFluts = function(callback){
   Flut.find({}).sort({'postDate': -1}).exec(callback);
 };

@@ -16,6 +16,7 @@ function($scope,$http,$location){
     $http.post('entry', request).then(
       function(response){
         if (response.data) {
+// localStorage.set('user_data', response.data);
           $location.path('/timeline');
         } else { console.log('>>>>WRONG CREDENTIALS'); }
       },

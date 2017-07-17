@@ -2,12 +2,25 @@
 anApp.controller('timelineCtrl', ['$scope','$http','$interval','$routeParams',
 function($scope,$http,$interval,$routeParams){
 
+  $scope.user = {
+    username: 'user00',
+    id: '596aa1b149a6b0ac8f10d17'
+  };
+
   // CREATE FLUT
   $scope.submitFlut = function(){
     if (!$scope.flutText) { return; }
-    $http.post('flut/add').then(
+    let flutData = {
+      username: $scope.user.username,
+//      user: $scope.user.id,
+      text: $scope.flutText
+    };
+    $http.post('flut/add', flutData).then(
       function(response){
-        
+        if (response) {
+          $scope.flutText = "";
+          readFluts();
+        }
       },
       function(err){ console.error(err); }
     );
