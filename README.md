@@ -32,6 +32,8 @@ _A project to expand NodeJS and Web Dev. skills_
 + Have functions run as soon as page loads and within $interval
 + Dig deeper into how information is passed through functions and between Express and Angular
 + CATCHING TYPOS IN A TIMELY MATTER!
++ Modify styling to be responsive with screen sizes (optomize for mobile ?)
++
 
 --- --- --- --- --- --- --- --- --- --- --- ---
 ### Stream of Consciousness:
