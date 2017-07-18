@@ -21,7 +21,6 @@ _A project to expand NodeJS and Web Dev. skills_
 + Read/watch various tutorials to understand current standards and approaches to common actions (e.g.,  use config.js, (req, res){}, use IIFE, etc.)
 + Understand when to keep code together/concise and when to modularize for future expansion
 + Better understand how MongoDB stores data [and how to query it]
-+ 
 
 #### Challenges Faced:
 + Not placing the carriage before the horse (i.e., styling before functionality)
@@ -33,8 +32,11 @@ _A project to expand NodeJS and Web Dev. skills_
 + Have functions run as soon as page loads and within $interval
 + Dig deeper into how information is passed through functions and between Express and Angular
 + CATCHING TYPOS IN A TIMELY MATTER!
+
+#### Day-2 Thoughts:
 + Modify styling to be responsive with screen sizes (optomize for mobile ?)
-+
++ Place $http requests/etc. into Factories within AngularJS
++ Further security/encryption features
 
 --- --- --- --- --- --- --- --- --- --- --- ---
 ### Stream of Consciousness:

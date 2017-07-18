@@ -39,7 +39,7 @@ module.exports.readUserById = function(id, callback){
   User.findById(id).exec(callback);
 };
 module.exports.readUserByName = function(username, callback){
-  User.findOne({'username': username}).exec(callback);
+  User.findOne({'username': username}).exec(callback); //.select('_id username')
 };
 
 // UPDATE USER  -- update(), findOneAndUpdate()

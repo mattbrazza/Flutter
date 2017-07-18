@@ -24,6 +24,13 @@
         <input type="password" ng-model="password" class="form-control" placeholder="Password"/>
         <br/><button ng-click="login()" class="btn btn-default">Submit</button>
         </div>
+
+        <div class="alert alert-success" ng-show="loginSuccess">
+          <span>Login successful. Redirecting now...</span>
+        </div>
+        <div class="alert alert-danger" ng-show="loginError">
+          <span>{{ loginError }}</span>
+        </div>
      </div>
     </div> <!-- row -->
 

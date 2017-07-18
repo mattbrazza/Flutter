@@ -2,14 +2,27 @@
 
 <div class="row">
   <center><h3>CREATE A FLUT</h3></center>
-    <div class="col-md-8 col-md-offset-2">
+
+  <div class="col-md-3">
+    <div class="thumbnail">
+      <img ng-src="{{ user.profPicUrl }}" alt="Profile Pic"/>
+      <div class="caption">
+        <p>
+          <h3><a ng-href="#!/profile/{{ user.username }}">{{ user.dispName }}</a></h3>
+          <span>{{ user.tagline }}</span><br/>
+        </p>
+      </div> <!-- caption -->
+    </div> <!-- thumbnail -->
+  </div> <!-- col -->
+
+  <div class="col-md-8 col-md-offse-2">
     <div class="well">
       <div class="col-md-8 col-md-offset-1">
         <input ng-model="flutText" placeholder="Enter Flut" class="form-control" type="text"/>
       </div>
       <button ng-click="submitFlut()" class="btn btn-primary">Submit</button>
     </div>
-    </div>
+  </div>
 </div> <!-- row -->
 
 <div class="row">

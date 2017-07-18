@@ -1,11 +1,13 @@
 // ENTRY CONTROLLER
-anApp.controller('entryCtrl',['$scope','$http','$location',
-function($scope,$http,$location){
+anApp.controller('entryCtrl',['$scope','$http','$location','$timeout',
+function($scope, $http, $location, $timeout){
 
   // TODO: Create proper log-in system
   $scope.login = function(){
+    $scope.loginError = null;
+    $scope.loginSuccess = false;
     if (!$scope.username || !$scope.password) {
-      console.log(">>>>Fill in Username and/or Password");
+      $scope.loginError = 'Fill in username/password';
       return;
     } else {}
 
@@ -15,12 +17,18 @@ function($scope,$http,$location){
     };
     $http.post('entry', request).then(
       function(response){
-        if (response.data) {
-// localStorage.set('user_data', response.data);
-          $location.path('/timeline');
-        } else { console.log('>>>>WRONG CREDENTIALS'); }
+        if (response.data.success) {
+          $scope.loginSuccess = true;
+          localStorage.setItem('User-Data', JSON.stringify(response.data.user));
+          $timeout(function(){
+            $location.path('/timeline');
+          }, 2000);
+        } else { $scope.loginError = response.data.msg; } //'Wrong credentials. Please try again'; }
       },
-      function(err){ console.error(err); }
+      function(err){
+        console.error(err);
+        $scope.loginError = 'Login failure. Please try again';
+      }
     );
   };
 

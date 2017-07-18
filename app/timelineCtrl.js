@@ -2,10 +2,7 @@
 anApp.controller('timelineCtrl', ['$scope','$http','$interval','$routeParams',
 function($scope,$http,$interval,$routeParams){
 
-  $scope.user = {
-    username: 'user00',
-    id: '596aa1b149a6b0ac8f10d17'
-  };
+  $scope.user = JSON.parse(localStorage.getItem('User-Data'));
 
   // CREATE FLUT
   $scope.submitFlut = function(){

@@ -21,12 +21,12 @@ exApp.get('/', function(req, res){
 exApp.post('/entry', function(req, res){
   userController.readUserByName(req.body.username, function(err, user) {
     if (err) { console.error(err); }
-    else if (!user) { console.err('no user found'); }
+    else if (!user) { res.json({success: false, msg: 'No User Found'}); }
     else {
       if (req.body.password === user.password) {
-        let userData = { id: user._id, username: user.username };
-        res.json(userData);
-      } else { console.error('password is incorrect'); }
+        let userData = user; //{ id: user._id, username: user.username };
+        res.json({success: true, user: userData});
+      } else { res.json({success: false, msg: 'Password is Incorrect'}); }
     }
   });
 });
