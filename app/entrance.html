@@ -1,8 +1,6 @@
 <div class="container"> <!-- Entrance View -->
 
 <div class="row">
-    <div class="alert alert-danger" ng-show="errMsg"><span>{{ errMsg }}</span></div>
-
     <div class="page-header">
       <h3>Please sign-in/up to enter Flutter</h3>
     </div>
@@ -16,6 +14,10 @@
       <input type="password" ng-model="new_pwd2" class="form-control" placeholder="Confirm pwd"/>
       <br/><button ng-click="signup()" class="btn btn-default">Submit</button>
       </div>
+
+      <div class="alert alert-danger" ng-show="errMsgSu">
+        <span>{{ errMsgSu }}</span>
+      </div> 
     </div> <!-- col -->
 
 <div class="col-md-1 hidden-sm hidden-xs" style="height: 400px; border-right: 1px dashed black"></div>
@@ -28,11 +30,11 @@
         <br/><button ng-click="login()" class="btn btn-default">Submit</button>
       </div>
 
-      <div class="alert alert-success" ng-show="loginSuccess">
-        <span>Login successful. Redirecting now...</span>
+      <div class="alert alert-success" ng-show="succMsg">
+        <span>{{ succMsg }}</span>
       </div>
-      <div class="alert alert-danger" ng-show="loginError">
-        <span>{{ loginError }}</span>
+      <div class="alert alert-danger" ng-show="errMsg">
+        <span>{{ errMsg }}</span>
       </div>
     </div> <!-- col -->
 

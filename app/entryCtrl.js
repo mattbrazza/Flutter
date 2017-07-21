@@ -1,60 +1,71 @@
 // ENTRY CONTROLLER
-anApp.controller('entryCtrl',['$scope','$http','$location','$timeout',
-function($scope, $http, $location, $timeout){
+anApp.controller('entryCtrl',
+['userService', '$scope','$http','$location','$timeout',
+function(userService, $scope, $http, $location, $timeout){
 
-  // TODO: Create proper log-in system
+  /* LOGIN FUNCTION */
   $scope.login = function(){
-    $scope.loginError = null;
-    $scope.loginSuccess = false;
+    $scope.errMsg = null;
+    $scope.succMsg = null;
     if (!$scope.username || !$scope.password) {
-      $scope.loginError = 'Fill in username/password';
+      $scope.errMsg = 'Please fill in Username and Password';
       return;
     } else {}
 
     let request = {
       username: $scope.username,
-      password: $scope.password
-    };
+      password: $scope.password // TODO: Encrypt before POST
+    }
     $http.post('entry', request).then(
       function(response){
         if (response.data.success) {
-          $scope.loginSuccess = true;
-          localStorage.setItem('User-Data', JSON.stringify(response.data.user));
-          $timeout(function(){
-            $location.path('/timeline');
-          }, 2000);
-        } else { $scope.loginError = response.data.msg; } //'Wrong credentials. Please try again'; }
+          if (!userService.setUser(response.data.user)){
+            $scope.errMsg = 'Could not login user; please try again';
+          } else {
+            $scope.succMsg = 'Login successful; redirecting now...';
+            $timeout(function(){
+                $location.path('/timeline');
+            }, 2000);
+          }
+        } else { $scope.errMsg = response.data.msg || 'Server issue'; }
       },
       function(err){
+        $scope.errMsg = 'Login error encountered; please try again';
         console.error(err);
-        $scope.loginError = 'Login failure. Please try again';
       }
     );
   };
 
+  /* SIGN-UP FUNCTION */
   $scope.signup = function(){
+    $scope.errMsgSu = null;
     if (!$scope.new_username || !$scope.new_email ||
         !$scope.new_pwd1 || !$scope.new_pwd2) {
-      console.log('>>>>Fill in sign-up form');
+      $scope.errMsgSu = 'Please fill out all fields';
       return;
     } else if ($scope.new_pwd1 !== $scope.new_pwd2) {
-      console.log('>>>>Passwords do not match');
+      $scope.errMsgSu = 'Passwords did not match; please try again';
       return;
     } else {}
 
     let request = {
         username: $scope.new_username,
         email: $scope.new_email,
-        password: $scope.new_pwd1
+        password: $scope.new_pwd1 // TODO: Encrypt before POST
     };
     $http.post('addUser', request).then(
       function(response){
         if (response.data.success) {
-          $location.path('/profile/' + response.data.user.username);
-        } else { console.log('>>>>userFailer'); }
+          if (!userService.setUser(response.data.user)){
+            $scope.errMsgSu = 'Could sign-up user; please try again';
+          } else {
+            $location.path('/profile/' + userService.getUser('username'));
+          }
+        } else { $scope.errMsgSu = response.data.msg || 'Server issue'; }
       },
       function(err){
-        if (err) { console.error(err); }
+        $scope.errMsgSu = 'Login error encountered; please try again';
+        console.error(err);
       }
     );
   };

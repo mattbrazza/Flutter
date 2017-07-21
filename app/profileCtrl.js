@@ -1,7 +1,7 @@
 // PROFILE CONTROLLER
 anApp.controller('profileCtrl',
-['$scope','$http','$routeParams','$location','$interval',
-function($scope, $http, $routeParams, $location, $interval){
+['userService','$scope','$http','$routeParams','$location','$interval',
+function(userService, $scope, $http, $routeParams, $location, $interval){
 
   // TODO: Initiate this on load of controller properly?
   if ($routeParams.username) {
@@ -33,7 +33,7 @@ function($scope, $http, $routeParams, $location, $interval){
 
   // READ FLUTS - TODO: make into factory/service & share with TimelineCtrl
   function getFluts(username){
-    $http.get('flut/' + username).then(
+    $http.get('flut/user/' + username).then(
       function(response){
         if (!response.data.success) {
           $scope.alertMsg = response.data.msg;

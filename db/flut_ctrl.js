@@ -34,3 +34,9 @@ module.exports.getFlutsByUsername = function(username, callback){
     .exec(callback);
 };
 
+module.exports.getFlutById = function(id, callback) {
+  Flut.find({})
+    .where('_id').equals(id)
+    .exec(callback);
+}
+

@@ -1,46 +1,57 @@
 // TIMELINE CONTROLLER
 anApp.controller('timelineCtrl',
-['$scope','$http','$interval','$routeParams','$location',
-function($scope,$http,$interval,$routeParams,$location){
+['userService','$scope','$http','$interval','$routeParams','$location',
+function(userService,$scope,$http,$interval,$routeParams,$location){
 
-  // TODO: do this way better
-  let locUser = JSON.parse(localStorage.getItem('User-Data'))
-  if (!locUser) {
-    console.log('NO GO USER');
-    $scope.errMsg = 'Please log in to view Timeline';
+  if (!userService.isLoggedIn()) {
+    console.log('USER IS NOT LOGGED IN');
     $location.path('/');
-  } else { $scope.user = locUser; }
+  } else {
+    $scope.user = userService.getUser();
+  }
 
-  // CREATE FLUT
+  /* CREATE FLUT FUNCTION */
   $scope.submitFlut = function(){
+    $scope.errMsg = null;
     if (!$scope.flutText) { return; }
-    let flutData = {
+
+    let request = {
       username: $scope.user.username,
-//      user: $scope.user.id,
       text: $scope.flutText
     };
-    $http.post('flut/add', flutData).then(
+    $http.post('flut/add', request).then(
       function(response){
-        if (response) {
-          $scope.flutText = "";
+        if (response.data.success) {
+          $scope.flutText = ""; // reset Flut text field
           readFluts();
-        }
+        } else { $scope.errMsg = response.data.msg; }
       },
-      function(err){ console.error(err); }
+      function(err){
+        $scope.errMsg = 'Error encountered while submitting Flut; please try again';
+        console.error(err);
+      }
     );
   };
 
-  // READ FLUTS
+  /* GATHER FLUTS FUNCTION */
   function readFluts(){
-    $http.get('timeline').then(
+    $scope.errMsg = null;
+//    let reqId = $routeParams._id || 'all';
+    $http.get('flut/all').then(
       function(response){
-        $scope.fluts = response.data;
+        if (response.data.success) {
+          $scope.fluts = response.data.fluts;
+        } else { $scope.errMsg = response.data.msg; }
       },
-      function(err){ console.error(err); }
+      function(err){
+        $scope.errMsg = 'Error encountered while getting Fluts; please refresh';
+        console.error(err);
+      }
     );
   };
 
-  function readFlutById(){
+  // LOOK INTO THIS... MAYBE COMBINE AS ABOVE
+  function readFlutById_DEPRICATED_MAYBE(){
     $http.get('timeline/' + $routeParams._id).then(
       function(response){
         $scope.flut = response.data;
