@@ -19,64 +19,55 @@ exApp.get('/', function(req, res){
 });
 
 exApp.post('/entry', function(req, res){
-  userController.readUserByName(req.body.username, function(err, user) {
+  userController.readUserByName(req.body.username, function(err, userDoc) {
     if (err) { console.error(err); }
-    else if (!user) { res.json({success: false, msg: 'No User Found'}); }
+    else if (!userDoc) { res.json({success: false, msg: 'No User Found'}); }
     else {
-      if (req.body.password === user.password) {
-        let userData = user; //{ id: user._id, username: user.username };
-        res.json({success: true, user: userData});
-      } else { res.json({success: false, msg: 'Password is Incorrect'}); }
+      if (req.body.password === userDoc.password) {
+        res.json({success: true, user: userDoc});
+      } else {
+        res.json({success: false, msg: 'Password is Incorrect'});
+      }
     }
   });
 });
 
 exApp.get('/timeline', function(req, res){
   flutController.getFluts(function(err, docs){
-    if (err) { console.error(err); } else { res.json(docs); }
+    if (err) { console.error(err); }
+    else { res.json(docs); }
+  });
+});
+
+exApp.get('/flut/:username', function(req, res){
+  flutController.getFlutsByUsername(req.params.username, function(err, flutDocs){
+    if (err) { console.error(err); }
+    else if (!flutDocs) { res.json({success: false, msg: 'No Fluts Found'}); }
+    else { res.json({success: true, fluts: flutDocs}); }
   });
 });
 
 exApp.post('/flut/add', function(req, res){
-  console.log('FLUT-ADD: ', req.body);
-  flutController.createFlut(req.body, function(err, flut){
+  flutController.createFlut(req.body, function(err, flutDoc){
     if (err) { console.error(err); }
-    else { res.json(flut); }
+    else { res.json({success: true, flut: flutDoc}); }
   });
 });
 
-exApp.get('/profile', function(req, res){
-  console.log('IN SERVER-PROF: ', req.body);
-//  let userId = '596a6352b3c9b44fb452873b';
-//  userController.readUserById(userId, function(err, user){
-//    if (err) { console.error(err); }
-//    else { res.json(user); }
-//  });
-});
 
+exApp.get('/profile', function(req, res){}); // DEPRICATED
 exApp.get('/profile/:username', function(req, res){
-console.log('IN SPUN: ', req.body);
-//  console.log('IN SERVER-PROF-(', req.param.username, '): ', req.body);
-  userController.readUserByName(req.params.username, function(err, user){
+  userController.readUserByName(req.params.username, function(err, userDoc){
     if (err) { console.error(err); }
-    else if (!user) { console.error('>>>>NO USER FOUND!!'); }
-    else { 
-console.log('RETURNING: ', user);
-res.json(user); }
+    else if (!userDoc) { res.json({success: false, msg: 'No User Found'}); }
+    else { res.json({success: true, user: userDoc}); }
   });
 });
 
 exApp.post('/addUser', function(req, res){
-  console.log('IN SERVER-ADDU: ', req.body);
-  let result = {'success': false};
-  userController.createUser(req.body, function(err, user){
+  userController.createUser(req.body, function(err, userDoc){
     if (err) { console.error(err); }
-    else {
-//      console.log(user);
-      // TODO: persist user during session (Storage vs Cookie ?)
-      result = {'success': true};
-      res.json(result);
-    }
+    else { res.json({success: true, user: userDoc}); } // TODO: persist user thru
   });
 });
 

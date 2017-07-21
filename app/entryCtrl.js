@@ -50,7 +50,7 @@ function($scope, $http, $location, $timeout){
     $http.post('addUser', request).then(
       function(response){
         if (response.data.success) {
-          $location.path('/profile');
+          $location.path('/profile/' + response.data.user.username);
         } else { console.log('>>>>userFailer'); }
       },
       function(err){

@@ -1,32 +1,56 @@
 // PROFILE CONTROLLER
-anApp.controller('profileCtrl',['$scope','$http','$routeParams',
-function($scope,$http,$routeParams){
+anApp.controller('profileCtrl',
+['$scope','$http','$routeParams','$location','$interval',
+function($scope, $http, $routeParams, $location, $interval){
 
   // TODO: Initiate this on load of controller properly?
   if ($routeParams.username) {
     getUserData($routeParams.username);
   } else {
-    getUserData('user00');
+    user = JSON.parse(localStorage.getItem('User-Data'));
+    if (user) {
+      getUserData(user.username);
+    } else { $location.path('/'); };
   };
 
   function getUserData(username) {
+    $scope.errorMsg = null;
     $http.get('/profile/' + username).then(
       function(response){
-        let userData = {
-          username: response.data.username,
-          email: response.data.email,
-          dispName: response.data.dispName,
-          tagline: response.data.tagline,
-          profPicUrl: response.data.profPicUrl,
-          joinDate: response.data.joinDate
-        };
-        $scope.user = response.data; //userData;
+        if (!response.data.success) {
+          $scope.errorMsg = response.data.msg;
+          return;
+        } else {
+          $scope.user = response.data.user;
+        }
       },
       function(err){ console.error(err); }
     );
   };
 
   $scope.update = function(){};
+  $scope.followUser = function(){};
+
+  // READ FLUTS - TODO: make into factory/service & share with TimelineCtrl
+  function getFluts(username){
+    $http.get('flut/' + username).then(
+      function(response){
+        if (!response.data.success) {
+          $scope.alertMsg = response.data.msg;
+          return;
+        } else {
+          $scope.fluts = response.data.fluts;
+        }
+      },
+      function(err){ console.error(err); }
+    );
+  };
+
+  $interval(function(){
+    if ($scope.user) {
+      getFluts($scope.user.username);
+    } else {}
+  }, 5000);
 
 }]);
 

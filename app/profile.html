@@ -1,65 +1,56 @@
-<div>
-    <div class="page-header">
-      <h3>Flutter Profile</h3>
+<div class="container"> <!-- Profile (not yours) View -->
+
+<div class="row">
+  <div class="page-header">
+    <h3>Flutter Profile</h3>
+  </div>
+
+  <div class="alert alert-info" ng-show="alertMsg">
+    <span>{{ alertMsg }}</span>
+  </div>
+
+  <div class="col-md-3 col-md-offset-1">
+    <div class="thumbnail">
+      <img ng-src="{{ user.profPicUrl }}" alt="Profile Pic"/>
+      <div class="caption">
+        <p>
+            <h4>{{ user.dispName }}</h4>
+            <small>{{ user.username }}</small><br/>
+        </p>
+        <p>{{ user.tagline }}</p>
+        <p>
+        <span class="glyphicon glyphicon-user"></span>
+        <span>Followers: {{ user.followers.count }}</span><br/>
+        <span class="glyphicon glyphicon-user"></span>
+        <span>Following: {{ user.following.count }}</span><br/>
+        <span class="glyphicon glyphicon-calendar"></span>
+        <small>Joined: {{ user.joinDate | date:'MMMM yyyy' }}</small>
+        </p>
+        <a ng-click="followUser()" role="button"
+            class="disabled btn btn-primary btn-sm btn-block">Follow User</a>
+      </div> <!-- caption -->
+    </div> <!-- thumbnail -->
+  </div> <!-- col-md-3 -->
+
+  <div class="col-md-6">
+    <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr><th><center>Fluts by {{ user.username }}<center></th></tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="flut in fluts">
+        <td>{{ flut.text }}<br/>
+          <small>[{{ flut.likes.count }}] -- 
+            {{ flut.postDate | date:"H:mm:ss dd-MMM ''''yy Z" }}</small>
+        </td>
+        </tr>
+      </tbody>
+    </table>
     </div>
+  </div> <!-- col-md-6 -->
 
-    <div class="row">
-    <div class="col-md-3 col-md-offset-1">
-      <div class="thumbnail">
-        <img ng-src="{{ user.profPicUrl }}" alt="Profile Pic"/>
-        <div class="caption">
-          <center>
-          <p>
-            <h3>{{ user.dispName }}</h3>
-            <span>{{ user.tagline }}</span><br/>
-          </p>
-          <p>
-            <span class="glyphicon glyphicon-user"></span>
-            <span>Followers: {{ user.followers.count }}</span><br/>
-            <span class="glyphicon glyphicon-user"></span>
-            <span>Following: {{ user.following.count }}</span><br/>
-            <small>Joined: {{ user.joinDate | date:'dd-MMM \'yy' }}</small>
-          </p>
-          </center>
-          <a ng-click="update()" class="disabled btn btn-primary btn-sm btn-block" role="buton">Save Modifications</a>
-        </div>
-      </div>
-    </div>
+</div> <!-- row -->
 
-    <div class="col-md-6">
-      <form class="form-horizontal">
-
-        <div class="form-group">
-          <label class="control-label col-sm-4" for="username">Username:</label>
-          <div class="col-sm-8">
-          <input ng-model="user.username" type="text" class="form-control" id="username"/>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="control-label col-sm-4" for="dispName">Display Name:</label>
-          <div class="col-sm-8">
-          <input ng-model="user.dispName" type="text" class="form-control" id="dispName"/>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="control-label col-sm-4" for="email">Email:</label>
-          <div class="col-sm-8">
-          <input ng-model="user.email" type="email" class="form-control" id="email"/>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="control-label col-sm-4" for="tagline">Tagline:</label>
-          <div class="col-sm-8">
-          <input ng-model="user.tagline" type="text" class="form-control" id="tagline"/>
-          </div>
-        </div>
-
-      </form>
-    </div>
-    </div> <!-- row -->
-
-</div> <!-- END Profile Controller -->
+</div> <!-- END Profile View -->
 

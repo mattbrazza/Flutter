@@ -1,8 +1,15 @@
 // TIMELINE CONTROLLER
-anApp.controller('timelineCtrl', ['$scope','$http','$interval','$routeParams',
-function($scope,$http,$interval,$routeParams){
+anApp.controller('timelineCtrl',
+['$scope','$http','$interval','$routeParams','$location',
+function($scope,$http,$interval,$routeParams,$location){
 
-  $scope.user = JSON.parse(localStorage.getItem('User-Data'));
+  // TODO: do this way better
+  let locUser = JSON.parse(localStorage.getItem('User-Data'))
+  if (!locUser) {
+    console.log('NO GO USER');
+    $scope.errMsg = 'Please log in to view Timeline';
+    $location.path('/');
+  } else { $scope.user = locUser; }
 
   // CREATE FLUT
   $scope.submitFlut = function(){

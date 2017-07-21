@@ -18,6 +18,13 @@ anApp.config(['$routeProvider', function($routeProvider){
     templateUrl: 'app/timeline.html',
     controller: 'timelineCtrl'
   })
+  .when('/logoff', {
+    templateUrl: 'app/entrance.html',
+    redirectTo: function(){ // is fed params, see $routeProvider docs
+      localStorage.removeItem('User-Data');
+      return '/';
+    }
+  })
   .otherwise({
     redirectTo: '/'
   });

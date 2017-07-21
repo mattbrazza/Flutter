@@ -27,3 +27,10 @@ module.exports.getFluts = function(callback){
   Flut.find({}).sort({'postDate': -1}).exec(callback);
 };
 
+module.exports.getFlutsByUsername = function(username, callback){
+  Flut.find({})
+    .where('username').equals(username)
+    .sort({'postDate': -1})
+    .exec(callback);
+};
+
