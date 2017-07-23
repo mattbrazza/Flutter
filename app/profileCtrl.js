@@ -7,21 +7,19 @@ function(userService, $scope, $http, $routeParams, $location, $interval){
   if ($routeParams.username) {
     getUserData($routeParams.username);
   } else {
-    user = JSON.parse(localStorage.getItem('User-Data'));
-    if (user) {
-      getUserData(user.username);
-    } else { $location.path('/'); };
+    if (userService.isLoggedIn()) {
+      getUserData(userService.getUser('username');
+    } else { $location.path('/'); }
   };
 
   function getUserData(username) {
     $scope.errorMsg = null;
-    $http.get('/profile/' + username).then(
+    $http.get('/user/' + username).then(
       function(response){
-        if (!response.data.success) {
-          $scope.errorMsg = response.data.msg;
-          return;
-        } else {
+        if (response.data.success) {
           $scope.user = response.data.user;
+        } else {
+          $scope.errorMsg = response.data.msg || 'Server issue';
         }
       },
       function(err){ console.error(err); }
@@ -35,11 +33,10 @@ function(userService, $scope, $http, $routeParams, $location, $interval){
   function getFluts(username){
     $http.get('flut/user/' + username).then(
       function(response){
-        if (!response.data.success) {
-          $scope.alertMsg = response.data.msg;
-          return;
-        } else {
+        if (response.data.success) {
           $scope.fluts = response.data.fluts;
+        } else {
+          $scope.alertMsg = response.data.msg || 'Server issue';
         }
       },
       function(err){ console.error(err); }

@@ -18,7 +18,7 @@ exApp.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-exApp.post('/entry', function(req, res){
+exApp.post('/login', function(req, res){
   userController.readUserByName(req.body.username, function(err, userDoc) {
     if (err) { 
       res.json({success: false, msg: 'Server error encountered'});    
@@ -82,8 +82,8 @@ exApp.post('/flut/add', function(req, res){
 });
 
 
-exApp.get('/profile', function(req, res){}); // DEPRICATED
-exApp.get('/profile/:username', function(req, res){
+exApp.get('/user', function(req, res){}); // DEPRICATED
+exApp.get('/user/:username', function(req, res){
   userController.readUserByName(req.params.username, function(err, userDoc){
     if (err) { console.error(err); }
     else if (!userDoc) { res.json({success: false, msg: 'No User Found'}); }
@@ -91,7 +91,7 @@ exApp.get('/profile/:username', function(req, res){
   });
 });
 
-exApp.post('/addUser', function(req, res){
+exApp.post('/User/add', function(req, res){
   userController.createUser(req.body, function(err, userDoc){
     if (err) { console.error(err); }
     else { res.json({success: true, user: userDoc}); } // TODO: persist user thru

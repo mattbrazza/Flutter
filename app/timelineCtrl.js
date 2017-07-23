@@ -24,7 +24,7 @@ function(userService,$scope,$http,$interval,$routeParams,$location){
         if (response.data.success) {
           $scope.flutText = ""; // reset Flut text field
           readFluts();
-        } else { $scope.errMsg = response.data.msg; }
+        } else { $scope.errMsg = response.data.msg || 'Server issue'; }
       },
       function(err){
         $scope.errMsg = 'Error encountered while submitting Flut; please try again';
@@ -41,7 +41,7 @@ function(userService,$scope,$http,$interval,$routeParams,$location){
       function(response){
         if (response.data.success) {
           $scope.fluts = response.data.fluts;
-        } else { $scope.errMsg = response.data.msg; }
+        } else { $scope.errMsg = response.data.msg || 'Server issue'; }
       },
       function(err){
         $scope.errMsg = 'Error encountered while getting Fluts; please refresh';

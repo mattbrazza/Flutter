@@ -20,7 +20,8 @@ _A project to expand NodeJS and Web Dev. skills_
 + Understand how ExpressJS simplifies and abstracts the core $HTTP system
 + Read/watch various tutorials to understand current standards and approaches to common actions (e.g.,  use config.js, (req, res){}, use IIFE, etc.)
 + Understand when to keep code together/concise and when to modularize for future expansion
-+ Better understand how MongoDB stores data [and how to query it]
++ Better understand how MongoDB stores data (and how to query it)
++ Better understand AngularJS and its features; expand on Routing, Services, etc.
 
 #### Challenges Faced:
 + Not placing the carriage before the horse (i.e., styling before functionality)
@@ -51,4 +52,6 @@ I have spent a lot of days redoing huge chunks of my code over and over again to
 I am starting to get more comfortable with letting go control over all the aspects of my code base and let libraries/frameworks take control; primarily implementing Bootstrap with minimal knowledge at first and just trusting it to do its job.  
 As I expanded profiles and retaining User through a session, I realize that I had only implemented the profile for the case of the user viewing their own profile. So when I visited the profile of a different user, I was presented with the same screen with mutable information; a big no-no. I am now working to create a profile page that is for viewing by not yourself.  
 As I continue to modify the current pages to check if a user is logged in or not, I begin to really see the inefficiencies in my implementation (I always knew it was bad, but I am really starting to dig myself in too deep). I am now looking into Angular Services and the notion of saving the current user state/info into this service and inject it into the controllers that I have. -- I am also thinking of doing a service to handle passing data/messages between controllers, but I doubt that is the best approach.  
+While adding in the User Service, I started to think more about the URIs I was using and decided to change the server side calls a bit to make it more uniform and possibly API-ish (e.g., /profile/:username -> /user/:username, /addUser -> /user/add, etc.)  
+
 

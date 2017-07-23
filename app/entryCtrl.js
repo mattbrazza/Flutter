@@ -16,7 +16,7 @@ function(userService, $scope, $http, $location, $timeout){
       username: $scope.username,
       password: $scope.password // TODO: Encrypt before POST
     }
-    $http.post('entry', request).then(
+    $http.post('login', request).then(
       function(response){
         if (response.data.success) {
           if (!userService.setUser(response.data.user)){
@@ -53,7 +53,7 @@ function(userService, $scope, $http, $location, $timeout){
         email: $scope.new_email,
         password: $scope.new_pwd1 // TODO: Encrypt before POST
     };
-    $http.post('addUser', request).then(
+    $http.post('user/add', request).then(
       function(response){
         if (response.data.success) {
           if (!userService.setUser(response.data.user)){
