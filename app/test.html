@@ -1,0 +1,140 @@
+<div class="container"> <!-- Timeline View -->
+
+<div class="row">
+  <div class="alert alert-success" ng-show="succMsg"><span>{{ succMsg}}</span></div>
+  <div class="alert alert-danger" ng-show="errMsg"><span>{{ errMsg }}</span></div>
+  <div class="alert alert-info" ng-show="infoMsg"><span>{{ infoMsg }}</span></div>
+
+  <!-- PROFILE BOX -->
+  <div class="col-md-3">
+    <div class="thumbnail">
+      <img ng-src="{{ user.profPicUrl }}" alt="Profile Pic"
+            style="height: 200px; width: 200px; border-radius: 25px"/>
+      <div class="caption">
+        <center><h3>{{ user.dispName }}</h3></center>
+        @<i>{{ user.username }}</i>
+        <p>{{ user.tagline }}</p>
+        <br/>
+        <p>
+          <span class="glyphicon glyphicon-user"></span>
+          <span>Followers: {{ user.followers.count }}</span>
+          &#160; &#160;
+          <span class="glyphicon glyphicon-user"></span>
+          <span>Following: {{ user.following.count }}</span><br/>
+          <center><small><span class="glyphicon glyphicon-calendar"></span>
+                Joined: {{ user.joinDate | date:'MMMM yyyy' }}</small>
+          </center>
+        </p>
+        <a ng-click="toggleFollow()" role="button" ng-show"isProfile"
+            class="disabled btn btn-primary btn-sm btn-block">Follow User</a>
+      </div> <!-- caption -->
+    </div> <!-- thumbnail -->
+  </div> <!-- col-PROFILE BOX -->
+
+  <div class="col-md-7 col-md-offset-1">
+    <!-- SUBMIT FLUT BOX -->
+    <div class="well">
+      <div class="row">
+        <div class="col-md-10">
+          <input ng-model="flutText" placeholder="Enter Flut" class="form-control" type="text"/>
+        </div>
+        <div class="col-md-2">
+          <button ng-click="submitFlut()" class="btn btn-primary" role="button">Submit</button>
+        </div>
+      </div>
+    </div><!-- col-SUBMIT FLUT -->
+
+    <!-- FLUT TIMELINE -->
+<div class="container-fluid">
+  <div class="row"><center><b>Flut Timeline</b></center><hr/></div>
+
+  <div ng-repeat="flut in fluts" class="well">
+
+    <div class="row">
+      <div class="col-md-2" style="border: 0px red solid">
+        <center>
+          <img ng-src="{{user.profPicUrl}}" class="img"
+            style="height: 58px; width: 58px; border-radius: 25px"/>
+          <h4>{{ user.username }}</h4>
+        </center>
+      </div>
+
+      <div class="col-md-10" style="border: 0px orange solid">
+        <div class="well well-sm" style="border: none;">
+          {{ flut.text }}
+        </div>
+        <div class="text-right" style="border: 0px solid darkblue">
+        <span ng-click="likeFlut(this.flut)">
+          <span class="glyphicon glyphicon-star-empty"></span>
+          <span class="">{{ flut.likes.count }}</span>
+        </span>
+          &nbsp;&nbsp;
+          <small>
+            <span class="glyphicon glyphicon-time"></span> 
+             {{ flut.postDate | date:"H:mm, dd-MMM ''''yy" }}
+          </small>
+        </div> <!-- right -->
+      </div> <!-- col-10 -->
+    </div> <!-- row -->
+
+<!--    <div class="row">
+        <div class="col-md-2" style="border: 1px blue solid">
+            <strong>{{ user.username }}</strong>
+        </div>
+        <div class="col-md-10" style="border: 1px green solid">
+            <small>[{{ flut.likes.count }}] -/- 
+                {{ flut.postDate | date:"H:mm:ss dd-MMM ''''yy Z" }}</small>
+        </div>
+    </div>
+-->  </div> <!-- ng-repeat -->
+
+  <div ng-repeat="flut in fluts" class="well">
+    <div class="row">
+<!--        <div class="col-md-4" style="border: 1px red solid">
+-->           <img ng-src="{{user.profPicUrl}}" class="img"
+                style="height: 48px; width: 48px; border-radius: 20px"/>
+<!--        </div>
+        <div class="col-md-8" style="border: 1px orange solid">
+-->            <span>{{ flut.text }}</span>
+<!--        </div>
+-->    </div>
+    <div class="row">
+<!--        <div class="col-md-4" style="border: 1px blue solid">
+-->            <strong>{{ user.username }}</strong>
+<!--        </div>
+        <div class="col-md-8" style="border: 1px green solid">
+-->            <small>[{{ flut.likes.count }}] -- 
+                {{ flut.postDate | date:"H:mm:ss dd-MMM ''''yy Z" }}</small>
+<!--        </div>
+-->    </div>
+  </div> <!-- ng-repeat -->
+</div>
+
+<hr/><br/><hr/>
+
+    <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr><th><center>
+          <span ng-show="isProfile">Fluts by {{ user.username }}</span>
+          <span ng-show="!isProfile">Flut timeline</span>
+        <center></th></tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="flut in fluts">
+        <td style="border: 1px red solid">{{ flut.text }}<br/>
+          <small>[{{ flut.likes.count }}] -- 
+            {{ flut.postDate | date:"H:mm:ss dd-MMM ''''yy Z" }}</small>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+    </div> <!-- FLUT TIMELINE -->
+
+  </div> <!-- col -->
+
+</div> <!-- row -->
+
+</div> <!-- END View -->
+
+

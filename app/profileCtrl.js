@@ -8,7 +8,7 @@ function(userService, $scope, $http, $routeParams, $location, $interval){
     getUserData($routeParams.username);
   } else {
     if (userService.isLoggedIn()) {
-      getUserData(userService.getUser('username');
+      getUserData(userService.getUser('username'));
     } else { $location.path('/'); }
   };
 

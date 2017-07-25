@@ -38,6 +38,7 @@ _A project to expand NodeJS and Web Dev. skills_
 + Modify styling to be responsive with screen sizes (optomize for mobile ?)
 + Place $http requests/etc. into Factories within AngularJS
 + Further security/encryption features
++ Allow profile privacy settings (show to all, only friends, etc.)
 
 --- --- --- --- --- --- --- --- --- --- --- ---
 ### Stream of Consciousness:

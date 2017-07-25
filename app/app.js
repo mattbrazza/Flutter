@@ -3,6 +3,8 @@ const anApp = angular.module('flutter', ['ngRoute']);
 // ROUTE CONFIGURATION
 anApp.config(['$routeProvider', function($routeProvider){
   $routeProvider
+.when('/test', { templateUrl: 'app/test.html', controller: 'testCtrl'})
+.when('/test/:username', { templateUrl: 'app/test.html', controller: 'testCtrl'})
   .when('/', {
     templateUrl: 'app/entrance.html',
     controller: 'entryCtrl'
