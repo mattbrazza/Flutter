@@ -3,27 +3,27 @@ const anApp = angular.module('flutter', ['ngRoute']);
 // ROUTE CONFIGURATION
 anApp.config(['$routeProvider', function($routeProvider){
   $routeProvider
-.when('/test', { templateUrl: 'app/test.html', controller: 'testCtrl'})
-.when('/test/:username', { templateUrl: 'app/test.html', controller: 'testCtrl'})
   .when('/', {
     templateUrl: 'app/entrance.html',
     controller: 'entryCtrl'
   })
+ .when('/timeline', {
+    templateUrl: 'app/timeline.html',
+    controller: 'timelineCtrl'
+  })
+  .when('/profile/:username', {
+    templateUrl: 'app/timeline.html',
+    controller: 'timelineCtrl'
+  })
+ 
   .when('/profile', {
     templateUrl: 'app/profile.html',
     controller: 'profileCtrl'
   })
-  .when('/profile/:username', {
-    templateUrl: 'app/profile.html',
-    controller: 'profileCtrl'
-  })
-  .when('/timeline', {
-    templateUrl: 'app/timeline.html',
-    controller: 'timelineCtrl'
-  })
+
   .when('/logoff', {
     templateUrl: 'app/entrance.html',
-    redirectTo: function(userService){ // is fed params, see $routeProvider docs
+    redirectTo: function(userService){ // see $routeProvider docs
       userService.logoutUser();
       return '/';
     }
@@ -34,7 +34,7 @@ anApp.config(['$routeProvider', function($routeProvider){
 }]);
 
 // SERVICES
-anApp.service('userService', function(){
+anApp.service('userService', ['$location', function($location){
   // TODO: make items private
   this.userData = null;
   this.userState = false;
@@ -69,9 +69,10 @@ anApp.service('userService', function(){
   this.logoutUser = function(){
     this.userData = null;
     this.userState = false;
+    $location.path('/');
     return true;
   };
 
-});
+}]);
 
 

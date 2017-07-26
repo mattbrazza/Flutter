@@ -75,7 +75,8 @@ exApp.get('/flut/user/:username', function(req, res){
 });
 
 exApp.post('/flut/add', function(req, res){
-  flutController.createFlut(req.body, function(err, flutDoc){
+  let flutRequest = req.body;
+  flutController.createFlut(flutRequest, function(err, flutDoc){
     if (err) { console.error(err); }
     else { res.json({success: true, flut: flutDoc}); }
   });
@@ -92,7 +93,8 @@ exApp.get('/user/:username', function(req, res){
 });
 
 exApp.post('/User/add', function(req, res){
-  userController.createUser(req.body, function(err, userDoc){
+  let userRequest = req.body;
+  userController.createUser(userRequest, function(err, userDoc){
     if (err) { console.error(err); }
     else { res.json({success: true, user: userDoc}); } // TODO: persist user thru
   });

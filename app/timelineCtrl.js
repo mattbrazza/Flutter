@@ -1,71 +1,130 @@
-// TIMELINE CONTROLLER
+// TIMELINE/PROFILE CONTROLLER
 anApp.controller('timelineCtrl',
-['userService','$scope','$http','$interval','$routeParams','$location',
-function(userService,$scope,$http,$interval,$routeParams,$location){
+['userService','$scope','$http','$location','$interval','$routeParams',
+function(userService, $scope, $http, $location, $interval, $routeParams){
 
-  if (!userService.isLoggedIn()) {
-    console.log('USER IS NOT LOGGED IN');
-    $location.path('/');
+  /* See if User is:
+    (1) Specific person's profile - /profile/:username
+    (2) Logged in, if not redirect - /
+    (3) Your profile, AKA Timeline - /timeline */
+  if ($routeParams.username) {
+    $scope.isProfile = true;
+    $scope.currProfile = $routeParams.username;
+    getUserProfile($scope.currProfile);
+    getFluts($scope.currProfile);
   } else {
-    $scope.user = userService.getUser();
+    $scope.isProfile = false;
+    $scope.currProfile = null;
+    if (!userService.isLoggedIn()) {
+      console.log('User not logged-in');
+//      $location.path('/');
+$scope.user = getUserProfile('user00');
+getFluts();
+    } else {
+      $scope.user = userService.getUser();
+      getFluts();
+    }
   }
 
-  /* CREATE FLUT FUNCTION */
-  $scope.submitFlut = function(){
+  /* READ USER DATA FOR SPECIFIC USERNAME */
+  function getUserProfile(username) {
     $scope.errMsg = null;
-    if (!$scope.flutText) { return; }
 
-    let request = {
-      username: $scope.user.username,
-      text: $scope.flutText
-    };
-    $http.post('flut/add', request).then(
+    $http.get('/user/' + username).then(
       function(response){
         if (response.data.success) {
-          $scope.flutText = ""; // reset Flut text field
-          readFluts();
-        } else { $scope.errMsg = response.data.msg || 'Server issue'; }
+          $scope.user = response.data.user;
+        } else {
+          $scope.errMsg = response.data.msg || 'Server issue';
+        }
       },
       function(err){
-        $scope.errMsg = 'Error encountered while submitting Flut; please try again';
+        $scope.errMsg = 'Error encountered while getting User Data';
         console.error(err);
       }
     );
+
+    if ($scope.errMsg) { console.log('MyError: ', $scope.errMsg); }
+    return; // $scope.user is set in IF(res.succ)
   };
 
-  /* GATHER FLUTS FUNCTION */
-  function readFluts(){
+  /* GET FLUTS FOR ALL =OR= SPECIFIC USERNAME */
+  function getFluts(username) {
     $scope.errMsg = null;
-//    let reqId = $routeParams._id || 'all';
-    $http.get('flut/all').then(
+    // TODO: possibly use $.isProfile instead ??
+    let reqURI = (username) ? '/flut/user/' + username : '/flut/all';
+
+    $http.get(reqURI).then(
       function(response){
         if (response.data.success) {
           $scope.fluts = response.data.fluts;
-        } else { $scope.errMsg = response.data.msg || 'Server issue'; }
+        } else {
+          $scope.errMsg = response.data.msg || 'Server issue';
+        }
       },
       function(err){
-        $scope.errMsg = 'Error encountered while getting Fluts; please refresh';
+        $scope.errMsg = 'Error encountered while getting Fluts';
         console.error(err);
       }
     );
+    
+    if ($scope.errMsg) { console.log('MyError: ', $scope.errMsg); }
+    return; // $scope.fluts is set above
   };
 
-  // LOOK INTO THIS... MAYBE COMBINE AS ABOVE
-  function readFlutById_DEPRICATED_MAYBE(){
-    $http.get('timeline/' + $routeParams._id).then(
+  /* SUBMIT A NEW FLUT REQUEST */
+  $scope.submitFlut = function() {
+    $scope.errMsg = null;
+    $scope.succMsg = null;
+    if (!$scope.flutText) {
+      $scope.errMsg = 'Cannot submit a empty Flut';
+      return;
+    }
+    let request = {
+      text: $scope.flutText,
+      username: $scope.user.username,
+      _user: $scope.user
+    };
+
+    $http.post('/flut/add', request).then(
       function(response){
-        $scope.flut = response.data;
+        if (response.data.success) {
+          $scope.flutText = ""; // reset Flut text field
+          if ($scope.isProfile) { getFluts($scope.currProfile); }
+          else { getFluts(); }
+          $scope.succMsg = 'Flut successfully submitted';
+        } else {
+          $scope.errMsg = response.data.msg || 'Server issue';
+        }
       },
       function(err){
+        $scope.errMsg = 'Error encountered while submitting Flut';
         console.error(err);
       }
     );
+    
+    if ($scope.errMsg) { console.log('MyError: ', $scope.errMsg); }
+    return; // flut submitted to DB above
+  };
+
+  /* ADD LIKE TO FLUT - TODO: make persistent in DB */
+  $scope.likeFlut = function(flut){
+    flut.likes.count = flut.likes.count + 1;
+    flut.likes._users.push($scope.user);
+    return;
   };
 
   // SETUP TO REFRESH CONSTANTLY
   $interval(function(){
-    readFluts();
-  }, 5000);
+    if ($scope.isProfile) {
+      getFluts($scope.currProfile);
+    } else {
+      getFluts();
+    }
+    $scope.errMsg = null;
+    $scope.succMsg = null;
+    $scope.infoMsg = null;
+  }, 50000);
 
 }]);
 

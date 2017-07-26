@@ -4,32 +4,37 @@ const Schema = mongoose.Schema;
 
 const FlutSchema = new Schema({
   username: String,
-  user: { type: Schema.ObjectId, ref: 'User' },
   text: String,
-  postDate: { type: Date, default: Date.now },
+  _user: { type: Schema.ObjectId, ref: 'User' },
   likes: {
     count: {type: Number, default: 0, min: 0},
-    users: [{type: Schema.ObjectId, ref: 'User'}]
-  }
+    _users: [{type: Schema.ObjectId, ref: 'User'}]
+  },
+  postDate: { type: Date, default: Date.now }
 });
 
 const Flut = mongoose.model('Flut', FlutSchema);
 
-// CREATE FLUT
+/* CREATE FLUT */
 module.exports.createFlut = function(flutData, callback){
 //  let schemaData = {};
   let flut = new Flut(flutData);
   flut.save(callback);
 };
 
-// READ FLUTS
+/* READ FLUTS */
 module.exports.getFluts = function(callback){
-  Flut.find({}).sort({'postDate': -1}).exec(callback);
+  Flut.find({})
+    .populate('_user', 'username profPicUrl')
+//    .populate('likes._users', 'username')
+    .sort({'postDate': -1}).exec(callback);
 };
 
 module.exports.getFlutsByUsername = function(username, callback){
   Flut.find({})
     .where('username').equals(username)
+    .populate('_user', 'username profPicUrl')
+//    .populate('likes._users', 'username')
     .sort({'postDate': -1})
     .exec(callback);
 };
@@ -37,6 +42,8 @@ module.exports.getFlutsByUsername = function(username, callback){
 module.exports.getFlutById = function(id, callback) {
   Flut.find({})
     .where('_id').equals(id)
+    .populate('_user', 'username profPicUrl')
+//    .populate('likes._users', 'username')
     .exec(callback);
 }
 
