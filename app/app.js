@@ -21,12 +21,14 @@ anApp.config(['$routeProvider', function($routeProvider){
     controller: 'profileCtrl'
   })
 
-  .when('/logoff', {
+  .when('/logout', {
     templateUrl: 'app/entrance.html',
-    redirectTo: function(userService){ // see $routeProvider docs
+    controller: 'entryCtrl'
+/*  redirectTo: function() {
+      console.log('Logging out...');
       userService.logoutUser();
       return '/';
-    }
+    } */
   })
   .otherwise({
     redirectTo: '/'
@@ -39,8 +41,14 @@ anApp.service('userService', ['$location', function($location){
   this.userData = null;
   this.userState = false;
 
+    this.hi = function() {
+console.log('hii');
+return;
+}
+
   this.setUser = function(user){
     this.userData = {
+      id: user._id,
       username: user.username,
       email: user.email,
       dispName: user.dispName,

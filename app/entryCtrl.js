@@ -1,7 +1,14 @@
 // ENTRY CONTROLLER
 anApp.controller('entryCtrl',
-['userService', '$scope','$http','$location','$timeout',
+['userService','$scope','$http','$location','$timeout',
 function(userService, $scope, $http, $location, $timeout){
+
+  /* LOGOFF USER - TODO: Do this correctly in app.js */
+  if ($location.path() === '/logout') {
+    console.log('Logging off...');
+    userService.logoutUser();
+    $location.path('/');
+  }
 
   /* LOGIN FUNCTION */
   $scope.login = function(){

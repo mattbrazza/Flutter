@@ -17,9 +17,7 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
     $scope.currProfile = null;
     if (!userService.isLoggedIn()) {
       console.log('User not logged-in');
-//      $location.path('/');
-$scope.user = getUserProfile('user00');
-getFluts();
+      $location.path('/');
     } else {
       $scope.user = userService.getUser();
       getFluts();
@@ -83,9 +81,8 @@ getFluts();
     let request = {
       text: $scope.flutText,
       username: $scope.user.username,
-      _user: $scope.user
+      _user: $scope.user.id
     };
-
     $http.post('/flut/add', request).then(
       function(response){
         if (response.data.success) {
@@ -110,7 +107,7 @@ getFluts();
   /* ADD LIKE TO FLUT - TODO: make persistent in DB */
   $scope.likeFlut = function(flut){
     flut.likes.count = flut.likes.count + 1;
-    flut.likes._users.push($scope.user);
+    flut.likes._users.push($scope.user._id);
     return;
   };
 
