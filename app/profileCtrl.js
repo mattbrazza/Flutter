@@ -13,6 +13,6 @@ function(userService, $scope, $http, $location){
 
   function updateProfilePic(){};
 
-}]);
+}]); /* Profile-Editor Controller */
 
 

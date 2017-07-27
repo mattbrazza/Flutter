@@ -123,6 +123,6 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
     $scope.infoMsg = null;
   }, 50000);
 
-}]);
+}]); /* Timeline Controller */
 
 

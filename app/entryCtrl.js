@@ -66,7 +66,7 @@ function(userService, $scope, $http, $location, $timeout){
           if (!userService.setUser(response.data.user)){
             $scope.errMsgSu = 'Could sign-up user; please try again';
           } else {
-            $location.path('/profile/' + userService.getUser('username'));
+            $location.path('/profile'); // + userService.getUser('username'));
           }
         } else { $scope.errMsgSu = response.data.msg || 'Server issue'; }
       },
@@ -77,5 +77,6 @@ function(userService, $scope, $http, $location, $timeout){
     );
   };
 
-}]);
+}]); /* Entrance Controller */
+
 
