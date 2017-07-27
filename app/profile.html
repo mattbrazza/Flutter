@@ -1,39 +1,40 @@
 <div class="container"> <!-- Profile-Editor View -->
 
 <div class="row">
-    <div class="page-header">
-      <h3>Flutter Profile</h3>
-    </div>
+  <div class="alert alert-success" ng-show="succMsg"><span>{{ succMsg}}</span></div>
+  <div class="alert alert-danger" ng-show="errMsg"><span>{{ errMsg }}</span></div>
+  <div class="alert alert-info" ng-show="infoMsg"><span>{{ infoMsg }}</span></div>
 
-    <div class="alert alert-danger" ng-show="errorMsg">
-        <span>{{ errorMsg }}</span>
-    </div>
-
-<!--<div class="row">
-    -->
-    <div class="col-md-3 col-md-offset-1">
-      <div class="thumbnail">
-        <img ng-src="{{ user.profPicUrl }}" alt="Profile Pic"/>
-        <div class="caption">
-          <center>
-          <p>
-            <h3>{{ user.dispName }}</h3>
-            <span>{{ user.tagline }}</span><br/>
-          </p>
-          <p>
-            <span class="glyphicon glyphicon-user"></span>
-            <span>Followers: {{ user.followers.count }}</span><br/>
-            <span class="glyphicon glyphicon-user"></span>
-            <span>Following: {{ user.following.count }}</span><br/>
-            <small>Joined: {{ user.joinDate | date:'dd-MMM \'yy' }}</small>
-          </p>
+  <!-- PROFILE BOX -->
+  <div class="col-md-3">
+    <div class="thumbnail">
+      <img ng-src="{{ user.profPicUrl }}" alt="Profile Pic"
+            style="height: 200px; width: 200px; border-radius: 25px"/>
+      <div class="caption">
+        <center><h3>{{ user.dispName }}</h3></center>
+        @<i>{{ user.username }}</i>
+        <p>{{ user.tagline }}</p>
+        <br/>
+        <p>
+          <span class="glyphicon glyphicon-user"></span>
+          <span>Followers: {{ user.followers.count }}</span>
+          &#160; &#160;
+          <span class="glyphicon glyphicon-user"></span>
+          <span>Following: {{ user.following.count }}</span><br/>
+          <center><small><span class="glyphicon glyphicon-calendar"></span>
+                Joined: {{ user.joinDate | date:'dd MMMM yyyy' }}</small>
           </center>
-          <a ng-click="update()" class="disabled btn btn-primary btn-sm btn-block" role="buton">Save Modifications</a>
-        </div>
-      </div>
-    </div>
+        </p>
+        <a ng-click="toggleFollow()" role="button" ng-show"isProfile"
+            class="disabled btn btn-primary btn-sm btn-block">Follow User</a>
+      </div> <!-- caption -->
+    </div> <!-- thumbnail -->
+  </div> <!-- col-PROFILE BOX -->
 
-    <div class="col-md-6">
+  <div class="col-md-9">
+    <!-- PROFILE FORM -->
+    <div class="well">
+
       <form class="form-horizontal">
 
         <div class="form-group">
@@ -65,7 +66,9 @@
         </div>
 
       </form>
-    </div>
+
+    </div> <!-- well -->
+  </div> <!-- col -->
 
 </div> <!-- row -->
 </div> <!-- END View -->
