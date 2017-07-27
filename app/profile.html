@@ -31,43 +31,67 @@
     </div> <!-- thumbnail -->
   </div> <!-- col-PROFILE BOX -->
 
-  <div class="col-md-9">
+  <div class="col-md-6">
     <!-- PROFILE FORM -->
     <div class="well">
-
       <form class="form-horizontal">
-
-        <div class="form-group">
-          <label class="control-label col-sm-4" for="username">Username:</label>
-          <div class="col-sm-8">
-          <input ng-model="user.username" type="text" class="form-control" id="username"/>
-          </div>
-        </div>
 
         <div class="form-group">
           <label class="control-label col-sm-4" for="dispName">Display Name:</label>
           <div class="col-sm-8">
-          <input ng-model="user.dispName" type="text" class="form-control" id="dispName"/>
+            <input ng-model="user.dispName" type="text" class="form-control" id="dispName"/>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="control-label col-sm-4" for="email">Email:</label>
+          <label class="control-label col-sm-4" for="username">Username:</label>
           <div class="col-sm-8">
-          <input ng-model="user.email" type="email" class="form-control" id="email"/>
+            <input ng-model="user.username" type="text" class="form-control" id="username"/>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="control-label col-sm-4" for="tagline">Tagline:</label>
+          <label class="control-label col-sm-4" for="email">E-Mail:</label>
           <div class="col-sm-8">
-          <input ng-model="user.tagline" type="text" class="form-control" id="tagline"/>
+            <input ng-model="user.email" type="text" class="form-control" id="email"/>
           </div>
         </div>
 
-      </form>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="tagline">Tag Line:</label>
+          <div class="col-sm-8">
+            <input ng-model="user.tagline" type="text" class="form-control" id="tagline"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="profPicUrl">Profile Picture:</label>
+          <div class="col-sm-8">
+            <button ng-click="updateProfilePic" type="submit" class="btn btn-sm btn-block">Upload</button>
+          </div>
+        </div>
 
     </div> <!-- well -->
+  </div> <!-- col -->
+
+  <div class="col-md-3">
+    <div class="well">
+      <center>
+        <span class="glyphicon glyphicon-user"></span><b> Following</b>
+      </center>
+      <div ng-repeat="user_ing in user.following">
+        <span>{{ user_ing.username }}</span>
+      </div>
+    </div>
+
+    <div class="well">
+      <center>
+        <span class="glyphicon glyphicon-user"></span><b> Followers</b>
+      </center>
+      <div ng-repeat="user_ing in user.followers">
+        <span>{{ user_ers.username }}</span>
+      </div>
+    </div>
   </div> <!-- col -->
 
 </div> <!-- row -->
