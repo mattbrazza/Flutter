@@ -43,6 +43,9 @@ module.exports.readUserByName = function(username, callback){
 };
 
 // UPDATE USER  -- update(), findOneAndUpdate()
+module.exports.updateUser = function(userData, callback){
+};
+
 // DELETE USER  -- remove()
 
 

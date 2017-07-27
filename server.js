@@ -92,11 +92,20 @@ exApp.get('/user/:username', function(req, res){
   });
 });
 
-exApp.post('/User/add', function(req, res){
+exApp.post('/user/add', function(req, res){
   let userRequest = req.body;
   userController.createUser(userRequest, function(err, userDoc){
     if (err) { console.error(err); }
     else { res.json({success: true, user: userDoc}); } // TODO: persist user thru
+  });
+});
+
+exApp.post('/user/update', function(req, res){
+  let userRequest = req.body;
+  userController.updateUser(userRequest, function(err, userDoc){
+    if (err) { console.error(err); }
+    else if (!userDoc) { res.json({success: false, msg: 'Doc issue'}); }
+    else { res.json({success: true, user: userDoc}); }
   });
 });
 

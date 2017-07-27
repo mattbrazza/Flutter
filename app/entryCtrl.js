@@ -43,6 +43,7 @@ function(userService, $scope, $http, $location, $timeout){
     );
   };
 
+
   /* SIGN-UP FUNCTION */
   $scope.signup = function(){
     $scope.errMsgSu = null;
