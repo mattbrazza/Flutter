@@ -12,14 +12,20 @@ function(userService, $scope, $http, $location){
   }
 
   /* Update User Data in Database */
-  $scope.updateUserData = function(){
+  $scope.updateUserProfile = function(){
     $scope.errMsg = null;
     $scope.succMsg = null;
-    if (!$scope.dispName) { $scope.errMsg = 'Cannot have blank fields'; return; }
-    if (!$scope.username) { $scope.errMsg = 'Cannot have blank fields'; return; }
-    if (!$scope.email) { $scope.errMsg = 'Cannot have blank fields'; return; }
-    if (!$scope.tagline) { $scope.errMsg = 'Cannot have blank fields'; return; }
-
+    if (!$scope.user.dispName) { $scope.errMsg = 'Cannot blank DispName'; return; }
+    if (!$scope.user.username) { $scope.errMsg = 'Cannot blank Username'; return; }
+    if (!$scope.user.email) { $scope.errMsg = 'Cannot blank Email'; return; }
+    if (!$scope.user.tagline) { $scope.errMsg = 'Cannot blank Tagline'; return; }
+    let request = {
+      id: userService.getUser('id'),
+      username: $scope.user.username,
+      email: $scope.user.email,
+      dispName: $scope.user.dispName,
+      tagline: $scope.user.tagline
+    };
     $http.post('/user/update', request).then(
       function(response){
         if (response.data.success) {

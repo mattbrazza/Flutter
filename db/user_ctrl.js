@@ -44,6 +44,14 @@ module.exports.readUserByName = function(username, callback){
 
 // UPDATE USER  -- update(), findOneAndUpdate()
 module.exports.updateUser = function(userData, callback){
+  let query = { _id: userData.id };
+  let updateSet = {
+    username: userData.username,
+    email: userData.email,
+    dispName: userData.dispName,
+    tagline: userData.tagline
+  };
+  User.findOneAndUpdate(query,{$set: updateSet,}).exec(callback);
 };
 
 // DELETE USER  -- remove()
