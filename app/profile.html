@@ -1,9 +1,9 @@
 <div class="container"> <!-- Profile-Editor View -->
 
 <div class="row">
-  <div class="alert alert-success" ng-show="succMsg"><span>{{ succMsg}}</span></div>
-  <div class="alert alert-danger" ng-show="errMsg"><span>{{ errMsg }}</span></div>
-  <div class="alert alert-info" ng-show="infoMsg"><span>{{ infoMsg }}</span></div>
+  <div ng-show="succMsg" class="alert alert-success"><span>{{ succMsg}}</span></div>
+  <div ng-show="errMsg" class="alert alert-danger"><span>{{ errMsg }}</span></div>
+  <div ng-show="infoMsg" class="alert alert-info"><span>{{ infoMsg }}</span></div>
 
   <!-- PROFILE BOX -->
   <div class="col-md-3">
@@ -25,8 +25,10 @@
                 Joined: {{ user.joinDate | date:'dd MMMM yyyy' }}</small>
           </center>
         </p>
-        <a ng-click="updateUserProfile()" role="button" ng-show"isProfile"
-            class="btn btn-primary btn-sm btn-block">Update Profile</a>
+        <button ng-click="updateUserProfile()" role="button"
+            class="btn btn-primary btn-sm btn-block">Update Profile</button>
+        <a ng-href="#!/profile/{{ user.username }}" role="button"
+            class="btn btn-primary btn-sm btn-block">View Profile</a>
       </div> <!-- caption -->
     </div> <!-- thumbnail -->
   </div> <!-- col-PROFILE BOX -->
@@ -77,19 +79,43 @@
   <div class="col-md-3">
     <div class="well">
       <center>
-        <span class="glyphicon glyphicon-user"></span><b> Following</b>
+        <span class="glyphicon glyphicon-user"></span><b> Following
+            ({{ user.following.users.length }})</b>
       </center>
-      <div ng-repeat="user_ing in user.following">
-        <span>{{ user_ing.username }}</span>
+      <div ng-repeat="userT in user.following.users" class="media">
+        <div class="well well-sm">
+          <a ng-href="#!/profile/{{ userT.username }}">
+          <div class="media-left media-middle">
+              <img ng-src="{{ userT.profPicUrl }}" alt="Profile Pic"
+                class="media-object img-rounded" style="height: 35px; width: 35px"/>
+          </div>
+          <div class="media-right media-middle">
+            <b>{{ userT.dispName }}</b><br/>
+            <i>{{ userT.username }}</i>
+          </div>
+          </a>
+        </div>
       </div>
     </div>
 
     <div class="well">
       <center>
-        <span class="glyphicon glyphicon-user"></span><b> Followers</b>
+        <span class="glyphicon glyphicon-user"></span><b> Followers
+            ({{ user.followers.users.length }})</b>
       </center>
-      <div ng-repeat="user_ing in user.followers">
-        <span>{{ user_ers.username }}</span>
+      <div ng-repeat="userT in user.followers.users">
+        <div class="well well-sm">
+          <a ng-href="#!/profile/{{ userT.username }}">
+          <div class="media-left media-middle">
+              <img ng-src="{{ userT.profPicUrl }}" alt="Profile Pic"
+                class="media-object img-rounded" style="height: 35px; width: 35px"/>
+          </div>
+          <div class="media-right media-middle">
+            <b>{{ userT.dispName }}</b><br/>
+            <i>{{ userT.username }}</i>
+          </div>
+          </a>
+        </div>
       </div>
     </div>
   </div> <!-- col -->

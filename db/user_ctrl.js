@@ -22,7 +22,7 @@ const UserSchema = new Schema({
 
 const User = mongoose.model('User', UserSchema);
 
-// CREATE USER  -- save()
+// CREATE USER  -- createUser
 module.exports.createUser = function(userData, callback){
   let schemaData = {
     username: userData.username || "NOT_ENTERED",
@@ -34,15 +34,18 @@ module.exports.createUser = function(userData, callback){
   user.save(callback);
 };
 
-// READ USER    -- find(), findById(), findOne()
+// READ USER    -- readUserById(Depr?), readUserByName
 module.exports.readUserById = function(id, callback){
   User.findById(id).exec(callback);
 };
 module.exports.readUserByName = function(username, callback){
-  User.findOne({'username': username}).exec(callback); //.select('_id username')
+  User.findOne({'username': username})
+    .populate('following.users', 'username dispName profPicUrl')
+    .populate('followers.users', 'username dispName profPicUrl')
+    .exec(callback); //.select('_id username')
 };
 
-// UPDATE USER  -- update(), findOneAndUpdate()
+// UPDATE USER  -- updateUser, followUser, unfollowUser
 module.exports.updateUser = function(userData, callback){
   let query = { _id: userData.id };
   let updateSet = {
@@ -51,8 +54,24 @@ module.exports.updateUser = function(userData, callback){
     dispName: userData.dispName,
     tagline: userData.tagline
   };
-  User.findOneAndUpdate(query,{$set: updateSet,},{new: true}).exec(callback);
+  User.findOneAndUpdate(query,{$set: updateSet,},{new: true})
+    .populate('following.users', 'username dispName profPicUrl')
+    .populate('followers.users', 'username dispName profPicUrl')
+    .exec(callback);
 };
+
+module.exports.followUser = function(request, callback){
+  let query = { _id: request.user_id };
+  let updateSet = {
+    'following.users': request.profile_id
+  };
+  // TODO: Modify count ? || Depricate count, user .length ?
+  User.findOneAndUpdate(query,{$push: updateSet},{new: true})
+    .populate('following.users', 'username dispName profPicUrl')
+    .populate('followers.users', 'username dispName profPicUrl') 
+    .exec(callback);
+};
+module.exports.unfollowUser = function(request, callback){};
 
 // DELETE USER  -- remove()
 

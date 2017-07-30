@@ -113,33 +113,32 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
   /* FOLLOW/UNFOLLOW USER */
   $scope.followUser = function(){
     if (!$scope.isProfile) { return; }
+    let request = {
+      profile_id: $scope.profile._id,
+      user_id: $scope.user.id,
+      toFollow: true // true=follow, false=unfollow
+    };
 
-    // Update logged-in user
-    $scope.user.following.users.push($scope.profile.id);
-    $scope.user.following.count += 1;
-    // Update profile's user
-    $scope.profile.followers.users.push($scope.user.id);
-    $scope.profile.followers.count += 1;
-
-    $http.post('/user/follow', {req: true}).then(
+    $http.post('/user/follow', request).then(
       function(response){
+        if (response.data.success) {
+          $scope.isFollowing = true;
+          $scope.succMsg = 'You are now following ' + $scope.profile.username;
+          userService.setUser(response.data.user);
+        } else {
+          $scope.errMsg = response.data.msg || 'Server issue';
+        }
       },
       function(err){
+        $scope.errMsg = 'Error encountered while following user';
+        console.error(err);
       }
     );
-    $scope.isFollowing = true;    
+
     return;
   };
   $scope.unfollowUser = function(){
     if (!$scope.isProfile) { return; }
-
-    // Update logged-in user
-//    $scope.user.following.users.remove($scope.profile.id);
-    $scope.user.following.count -= 1;
-    // Update profile's user
-//    $scope.profile.followers.users.remove($scope.user.id);
-    $scope.profile.followers.count -= 1; 
-
     $scope.isFollowing = false;
     return;
   };

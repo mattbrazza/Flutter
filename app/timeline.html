@@ -1,9 +1,9 @@
 <div class="container"> <!-- Timeline/Profile View -->
 
 <div class="row">
-  <div class="alert alert-success" ng-show="succMsg"><span>{{ succMsg}}</span></div>
-  <div class="alert alert-danger" ng-show="errMsg"><span>{{ errMsg }}</span></div>
-  <div class="alert alert-info" ng-show="infoMsg"><span>{{ infoMsg }}</span></div>
+  <div ng-show="succMsg" class="alert alert-success"><span>{{ succMsg}}</span></div>
+  <div ng-show="errMsg" class="alert alert-danger"><span>{{ errMsg }}</span></div>
+  <div ng-show="infoMsg" class="alert alert-info"><span>{{ infoMsg }}</span></div>
 
   <!-- PROFILE BOX -->
   <div class="col-md-3">
@@ -52,7 +52,7 @@
     <div class="container-fluid">
       <div class="row">
         <center>
-          <h3 ng-show="isProfile">Fluts by {{ user.username }}</h3>
+          <h3 ng-show="isProfile">Fluts by {{ profile.username }}</h3>
           <h3 ng-show="!isProfile">Flut Timeline</h3>
         </center>
         <hr/>

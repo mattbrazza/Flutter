@@ -96,7 +96,7 @@ exApp.post('/user/add', function(req, res){
   let userRequest = req.body;
   userController.createUser(userRequest, function(err, userDoc){
     if (err) { console.error(err); }
-    else { res.json({success: true, user: userDoc}); } // TODO: persist user thru
+    else { res.json({success: true, user: userDoc}); }
   });
 });
 
@@ -104,12 +104,23 @@ exApp.post('/user/update', function(req, res){
   let userRequest = req.body;
   userController.updateUser(userRequest, function(err, userDoc){
     if (err) { console.error(err); }
-    else if (!userDoc) { res.json({success: false, msg: 'Doc issue'}); }
+    else if (!userDoc) { res.json({success: false, msg: 'Updating doc issue'}); }
     else { res.json({success: true, user: userDoc}); }
   });
 });
 
+exApp.post('/user/follow', function(req, res){
+  let followRequest = req.body;
+  userController.followUser(followRequest, function(err, userDoc){
+    if (err) { console.error(err); }
+    else if (!userDoc) { res.json({success: false, msg: 'Following user issue'}); }
+    else { res.json({success: true, user: userDoc}); }
+  });
+});
+exApp.post('/user/unfollow', function(req, res){});
+
 // RUN IT
 const PORT_NO = process.env.PORT_NO || 3000;
 exApp.listen(PORT_NO, () => { console.log('LISTENING ON ', PORT_NO); });
+
 

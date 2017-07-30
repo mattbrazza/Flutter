@@ -3,11 +3,18 @@ anApp.controller('entryCtrl',
 ['userService','$scope','$http','$location','$timeout',
 function(userService, $scope, $http, $location, $timeout){
 
-  /* LOGOFF USER - TODO: Do this correctly in app.js */
+  /* LOGOFF USER - NEEDS TO BE AT TOP
+    TODO: Do this correctly in app.js */
   if ($location.path() === '/logout') {
     console.log('Logging off...');
     userService.logoutUser();
     $location.path('/');
+  }
+
+  /* CHECK IF USER IS ALREADY LOGGED-IN */
+  if (userService.isLoggedIn()){
+    $scope.infoMsg = 'Already logged-in; redirecting...'
+    $timeout(() => { $location.path('/timeline'); }, 2000);
   }
 
   /* LOGIN FUNCTION */

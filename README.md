@@ -35,6 +35,7 @@ _A project to expand NodeJS and Web Dev. skills_
 + Dig deeper into how information is passed through functions and between Express and Angular
 + CATCHING TYPOS IN A TIMELY MATTER!
 + Local vs Session Storage and how to use within the context of AngularJS
++ Working with "complex" structures stored in the Database; specifically pushing/removing users from the followers/following arrays that is a property of the user Schema
 
 #### Day-2 Thoughts:
 + Modify styling to be responsive with screen sizes (optomize for mobile ?)
@@ -61,6 +62,6 @@ As I continue to modify the current pages to check if a user is logged in or not
 While adding in the User Service, I started to think more about the URIs I was using and decided to change the server side calls a bit to make it more uniform and possibly API-ish (e.g., /profile/:username -> /user/:username, /addUser -> /user/add, etc.)  
 At this point, I now have a website/webapp that allows a user to sign-up/log-in, view a timeline of all Fluts, got to profiles of specific users that will show only their Fluts, and the ability to log-off. There is definitely a lot that needs to be cleaned up and I still need to make "liking" a Flut persistent in the DB, but I think it will hold up as I move to the next item: allowing a user to modify their own profile.  
 The extreme basics of the site appear done, but serious work needs to be done to make sure User-Data is persistent and updates properly.  
-
+As I start to tackle the "follow a user" feature, I realize that it is a lot more complex than I originally thought. I have to figure out how to push/remove objects to the arrays stored as a property of the user, specfically doing that within the database. I not only have to do that for the logged-in user, but update the user that is being followed, to show that the logged-in user is **following** them. As I push forward, I think I will refactor this such that follow[ing|ers] is not _{users: [], count: INT}_, but rather just _users: []_ and remove _count_ and just use _.length_ where count was used before... Still fiddling with it and try to figure out an implementation that feels right.  
 
 
