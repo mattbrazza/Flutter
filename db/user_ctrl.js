@@ -51,7 +51,7 @@ module.exports.updateUser = function(userData, callback){
     dispName: userData.dispName,
     tagline: userData.tagline
   };
-  User.findOneAndUpdate(query,{$set: updateSet,}).exec(callback);
+  User.findOneAndUpdate(query,{$set: updateSet,},{new: true}).exec(callback);
 };
 
 // DELETE USER  -- remove()

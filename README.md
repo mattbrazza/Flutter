@@ -39,6 +39,7 @@ _A project to expand NodeJS and Web Dev. skills_
 + Place $http requests/etc. into Factories within AngularJS
 + Further security/encryption features
 + Allow profile privacy settings (show to all, only friends, etc.)
++ PenTest and check potential minification exploits
 
 --- --- --- --- --- --- --- --- --- --- --- ---
 ### Stream of Consciousness:
@@ -55,5 +56,7 @@ As I expanded profiles and retaining User through a session, I realize that I ha
 As I continue to modify the current pages to check if a user is logged in or not, I begin to really see the inefficiencies in my implementation (I always knew it was bad, but I am really starting to dig myself in too deep). I am now looking into Angular Services and the notion of saving the current user state/info into this service and inject it into the controllers that I have. -- I am also thinking of doing a service to handle passing data/messages between controllers, but I doubt that is the best approach.  
 While adding in the User Service, I started to think more about the URIs I was using and decided to change the server side calls a bit to make it more uniform and possibly API-ish (e.g., /profile/:username -> /user/:username, /addUser -> /user/add, etc.)  
 At this point, I now have a website/webapp that allows a user to sign-up/log-in, view a timeline of all Fluts, got to profiles of specific users that will show only their Fluts, and the ability to log-off. There is definitely a lot that needs to be cleaned up and I still need to make "liking" a Flut persistent in the DB, but I think it will hold up as I move to the next item: allowing a user to modify their own profile.  
+The extreme basics of the site appear done, but serious work needs to be done to make sure User-Data is persistent and updates properly.  
+
 
 

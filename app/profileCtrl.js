@@ -29,6 +29,7 @@ function(userService, $scope, $http, $location){
     $http.post('/user/update', request).then(
       function(response){
         if (response.data.success) {
+          userService.setUser(response.data.user);
           $scope.succMsg = 'Successfully updated your User Profile';
         } else {
           $scope.errMsg = response.data.msg || 'Server issue';
