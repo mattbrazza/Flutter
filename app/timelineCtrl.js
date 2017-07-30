@@ -9,16 +9,16 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
     (3) Your profile, AKA Timeline - /timeline */
   if ($routeParams.username) {
     $scope.isProfile = true;
-    $scope.currProfile = $routeParams.username;
-    getUserProfile($scope.currProfile);
-    getFluts($scope.currProfile);
+    getUserProfile($routeParams.username);
+    $scope.user = userService.getUser();
+    getFluts($routeParams.username); // $scope.profile.username
   } else {
-    $scope.isProfile = false;
-    $scope.currProfile = null;
-    if (!userService.isLoggedIn()) {
+   if (!userService.isLoggedIn()) {
       console.log('User not logged-in');
       $location.path('/');
     } else {
+      $scope.isProfile = false;
+      $scope.profile = userService.getUser();
       $scope.user = userService.getUser();
       getFluts();
     }
@@ -31,7 +31,7 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
     $http.get('/user/' + username).then(
       function(response){
         if (response.data.success) {
-          $scope.user = response.data.user;
+          $scope.profile = response.data.user;
         } else {
           $scope.errMsg = response.data.msg || 'Server issue';
         }
@@ -41,9 +41,8 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
         console.error(err);
       }
     );
-
     if ($scope.errMsg) { console.log('MyError: ', $scope.errMsg); }
-    return; // $scope.user is set in IF(res.succ)
+    return; // $user.profile is set in IF(RES.SUCC)
   };
 
   /* GET FLUTS FOR ALL =OR= SPECIFIC USERNAME */
@@ -87,7 +86,7 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
       function(response){
         if (response.data.success) {
           $scope.flutText = ""; // reset Flut text field
-          if ($scope.isProfile) { getFluts($scope.currProfile); }
+          if ($scope.isProfile) { getFluts($scope.profile.username); }
           else { getFluts(); }
           $scope.succMsg = 'Flut successfully submitted';
         } else {
@@ -106,15 +105,49 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
 
   /* ADD LIKE TO FLUT - TODO: make persistent in DB */
   $scope.likeFlut = function(flut){
-    flut.likes.count = flut.likes.count + 1;
+    flut.likes.count = flut.likes.count + 1; // += 1
     flut.likes._users.push($scope.user._id);
     return;
   };
 
-  // SETUP TO REFRESH CONSTANTLY
+  /* FOLLOW/UNFOLLOW USER */
+  $scope.followUser = function(){
+    if (!$scope.isProfile) { return; }
+
+    // Update logged-in user
+    $scope.user.following.users.push($scope.profile.id);
+    $scope.user.following.count += 1;
+    // Update profile's user
+    $scope.profile.followers.users.push($scope.user.id);
+    $scope.profile.followers.count += 1;
+
+    $http.post('/user/follow', {req: true}).then(
+      function(response){
+      },
+      function(err){
+      }
+    );
+    $scope.isFollowing = true;    
+    return;
+  };
+  $scope.unfollowUser = function(){
+    if (!$scope.isProfile) { return; }
+
+    // Update logged-in user
+//    $scope.user.following.users.remove($scope.profile.id);
+    $scope.user.following.count -= 1;
+    // Update profile's user
+//    $scope.profile.followers.users.remove($scope.user.id);
+    $scope.profile.followers.count -= 1; 
+
+    $scope.isFollowing = false;
+    return;
+  };
+
+  /* REFRESH TIMELINE REPEATEDLY */
   $interval(function(){
     if ($scope.isProfile) {
-      getFluts($scope.currProfile);
+      getFluts($scope.profile.username);
     } else {
       getFluts();
     }

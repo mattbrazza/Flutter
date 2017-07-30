@@ -22,6 +22,7 @@ _A project to expand NodeJS and Web Dev. skills_
 + Understand when to keep code together/concise and when to modularize for future expansion
 + Better understand how MongoDB stores data (and how to query it)
 + Better understand AngularJS and its features; expand on Routing, Services, etc.
++ Understand Storage via Browser (not Cookies) and use within AngularJS
 
 #### Challenges Faced:
 + Not placing the carriage before the horse (i.e., styling before functionality)
@@ -33,12 +34,15 @@ _A project to expand NodeJS and Web Dev. skills_
 + Have functions run as soon as page loads and within $interval
 + Dig deeper into how information is passed through functions and between Express and Angular
 + CATCHING TYPOS IN A TIMELY MATTER!
++ Local vs Session Storage and how to use within the context of AngularJS
 
 #### Day-2 Thoughts:
 + Modify styling to be responsive with screen sizes (optomize for mobile ?)
 + Place $http requests/etc. into Factories within AngularJS
 + Further security/encryption features
++ A11y implementation (i.e., accessibility)
 + Allow profile privacy settings (show to all, only friends, etc.)
++ Implement best practices for Angular (e.g., IIFE, ng-if vs ng-show, etc.)
 + PenTest and check potential minification exploits
 
 --- --- --- --- --- --- --- --- --- --- --- ---

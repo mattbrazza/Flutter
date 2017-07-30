@@ -8,25 +8,29 @@
   <!-- PROFILE BOX -->
   <div class="col-md-3">
     <div class="thumbnail">
-      <img ng-src="{{ user.profPicUrl }}" alt="Profile Pic"
+      <img ng-src="{{ profile.profPicUrl }}" alt="Profile Pic"
             style="height: 200px; width: 200px; border-radius: 25px"/>
       <div class="caption">
-        <center><h3>{{ user.dispName }}</h3></center>
-        @<i>{{ user.username }}</i>
-        <p>{{ user.tagline }}</p>
+        <center><h3>{{ profile.dispName }}</h3></center>
+        @<i>{{ profile.username }}</i>
+        <p>{{ profile.tagline }}</p>
         <br/>
         <p>
           <span class="glyphicon glyphicon-user"></span>
-          <span>Followers: {{ user.followers.count }}</span>
+          <span>Followers: {{ profile.followers.count }}</span>
           &#160; &#160;
           <span class="glyphicon glyphicon-user"></span>
-          <span>Following: {{ user.following.count }}</span><br/>
+          <span>Following: {{ profile.following.count }}</span><br/>
           <center><small><span class="glyphicon glyphicon-calendar"></span>
-                Joined: {{ user.joinDate | date:'dd MMMM yyyy' }}</small>
+                Joined: {{ profile.joinDate | date:'dd MMMM yyyy' }}</small>
           </center>
         </p>
-        <a ng-click="toggleFollow()" role="button" ng-show"isProfile"
-            class="disabled btn btn-primary btn-sm btn-block">Follow User</a>
+        <div ng-if="isProfile">
+          <button ng-click="followUser()" ng-if="!isFollowing" role="button"
+            class="btn btn-primary btn-sm btn-block">Follow User</button>
+          <button ng-click="unfollowUser()" ng-if="isFollowing" role="button"
+            class="btn btn-warning btn-sm btn-block">Unfollow User</button>
+        </div>
       </div> <!-- caption -->
     </div> <!-- thumbnail -->
   </div> <!-- col-PROFILE BOX -->
@@ -67,7 +71,7 @@
             <!-- <h4 class="media-heading"></h4> -->
             <div class="well well-sm" style="border: none;">{{ flut.text }}</div>
             <div class="text-right">
-              <button ng-click="likeFlut(this.flut)">
+              <button ng-click="likeFlut(this.flut)" class="btn btn-link">
                 <span class="glyphicon glyphicon-star-empty"></span>
                 <span>{{ flut.likes.count }}</span>
               </button>
