@@ -66,7 +66,7 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
     );
     
     if ($scope.errMsg) { console.log('MyError: ', $scope.errMsg); }
-    return; // $scope.fluts is set above
+    return; // $scope.fluts is set in IF(RES.SUCC)
   };
 
   /* SUBMIT A NEW FLUT REQUEST */
@@ -100,11 +100,32 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
     );
     
     if ($scope.errMsg) { console.log('MyError: ', $scope.errMsg); }
-    return; // flut submitted to DB above
+    return; // flut submitted to DB
   };
 
   /* ADD LIKE TO FLUT - TODO: make persistent in DB */
   $scope.likeFlut = function(flut){
+    let request = {
+      flut_id: flut._id,
+      user_id: $scope.user.id
+    };
+
+    $http.post('/flut/like', request).then(
+      function(response){
+        if (response.data.success) {
+          if ($scope.isProfile) { getFluts($scope.profile.username); }
+          else { getFluts(); }
+        } else {
+          $scope.errMsg = response.data.msg || 'Server issue';
+        }
+      },
+      function(err){
+        $scope.errMsg = 'Error encountered while liking Flut';
+        console.error(err);
+      }
+    );
+
+
     flut.likes.count = flut.likes.count + 1; // += 1
     flut.likes._users.push($scope.user._id);
     return;
@@ -135,7 +156,7 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
       }
     );
 
-    return;
+    return; // re-sets user in IF(RES.SUCC)
   };
   $scope.unfollowUser = function(){
     if (!$scope.isProfile) { return; }

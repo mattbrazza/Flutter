@@ -15,6 +15,7 @@ function(userService, $scope, $http, $location){
   $scope.updateUserProfile = function(){
     $scope.errMsg = null;
     $scope.succMsg = null;
+    // TODO: Check if form is 'DIRTY', disable update if not, etc.
     if (!$scope.user.dispName) { $scope.errMsg = 'Cannot blank DispName'; return; }
     if (!$scope.user.username) { $scope.errMsg = 'Cannot blank Username'; return; }
     if (!$scope.user.email) { $scope.errMsg = 'Cannot blank Email'; return; }
@@ -38,10 +39,14 @@ function(userService, $scope, $http, $location){
       function(err){
         $scope.errMsg = 'Error encountered while updating profile';
         console.error(err);
-      });
+      }
+    );
+
+    return; // re-sets user in IF(RES.SUCC)
   };
 
-  function updateProfilePic(){};
+  /* UPLOAD A NEW PROFILE PICTURE - */
+  function updateProfilePic(){ return; };
 
 }]); /* Profile-Editor Controller */
 

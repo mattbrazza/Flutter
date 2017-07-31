@@ -15,14 +15,14 @@ const FlutSchema = new Schema({
 
 const Flut = mongoose.model('Flut', FlutSchema);
 
-/* CREATE FLUT */
+/* CREATE FLUT - createFlut */
 module.exports.createFlut = function(flutData, callback){
 //  let schemaData = {};
   let flut = new Flut(flutData);
   flut.save(callback);
 };
 
-/* READ FLUTS */
+/* READ FLUTS - getFluts, getFlutsByUsername, getFlutById */
 module.exports.getFluts = function(callback){
   Flut.find({})
     .populate('_user', 'username profPicUrl')
@@ -43,7 +43,22 @@ module.exports.getFlutById = function(id, callback) {
   Flut.find({})
     .where('_id').equals(id)
     .populate('_user', 'username profPicUrl')
-//    .populate('likes._users', 'username')
+    .populate('likes._users', 'username profPicUrl')
     .exec(callback);
-}
+};
+
+/* UPDATE FLUT - likeFlut */
+module.exports.likeFlut = function(request, callback){
+  let query = { _id: request.flut_id };
+  let updateSet = { 'likes._users': request.user_id };
+
+  // TODO: Check for already liked, and return
+  Flut.findOneAndUpdate(query,{$push: updateSet},{new: true})
+    .populate('_user', 'username profPicUrl')
+    .populate('likes._users', 'username profPicUrl')
+    .exec(callback);
+};
+
+/* REMOVE FLUT */
+
 

@@ -1,36 +1,38 @@
+/* REQUIREMENTS */
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const exApp = express();
 
-// CONFIGURATION / CONNECT TO MONGO DB
+/* CONFIGURATION / CONNECT TO MONGO DB */
 const config = require('./db/config.js'); config.setConfigs();
 mongoose.connect(process.env.MONGODB_URI);
 
-// CONTROLLERS / LIBRARIES
+/* CONTROLLERS / LIBRARIES */
 exApp.use('/app', express.static(__dirname + '/app'));
 exApp.use(bodyParser.json());
 const flutController = require('./db/flut_ctrl.js');
 const userController = require('./db/user_ctrl.js');
 
-// ROUTING
+/* ROUTING - USERS/, FLUT/, ETC. */
 exApp.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
 exApp.post('/login', function(req, res){
-  userController.readUserByName(req.body.username, function(err, userDoc) {
+  let loginRequest = req.body;
+  userController.readUserByName(loginRequest, function(err, userDoc) {
     if (err) { 
       res.json({success: false, msg: 'Server error encountered'});    
       console.error(err);
     } else if (!userDoc) {
       res.json({success: false, msg: 'Wrong Username or Password'});    
     } else {
-      if (req.body.password === userDoc.password) {
+//      if (req.body.password === userDoc.password) {
         res.json({success: true, user: userDoc});
-      } else {
-        res.json({success: false, msg: 'Password is Incorrect'});
-      }
+//      } else {
+//        res.json({success: false, msg: 'Password is Incorrect'});
+//      }
     }
   });
 });
@@ -55,9 +57,7 @@ exApp.get('/flut/id/:id', function(req, res){
       console.error(err);
     } else if (!flutDoc) {
       res.json({success: false, msg: 'No flut found with ID: ' + req.params.id});
-    } else {
-      res.json({success: true, flut: flutDoc});
-    }
+    } else { res.json({success: true, flut: flutDoc}); }
   });
 });
 
@@ -66,11 +66,9 @@ exApp.get('/flut/user/:username', function(req, res){
     if (err) {
       res.json({success: false, msg: 'Server error encountered'});
       console.error(err);
-    } else if (!flutDocs) {
-      res.json({success: false, msg: 'No fluts found'});
-    } else {
-      res.json({success: true, fluts: flutDocs});
     }
+    else if (!flutDocs) { res.json({success: false, msg: 'No fluts found'}); }
+    else { res.json({success: true, fluts: flutDocs}); }
   });
 });
 
@@ -78,6 +76,19 @@ exApp.post('/flut/add', function(req, res){
   let flutRequest = req.body;
   flutController.createFlut(flutRequest, function(err, flutDoc){
     if (err) { console.error(err); }
+    else if (!flutDoc) { res.json({success: false, msg: 'Issue creating Flut'}); }
+    else { res.json({success: true, flut: flutDoc}); }
+  });
+});
+
+exApp.post('/flut/like', function(req, res){
+  let flutRequest = req.body;
+  flutController.likeFlut(flutRequest, function(err, flutDoc){
+    if (err) {
+      res.json({success: false, msg: 'Server error encountered'});
+      console.error(err);
+    }
+    else if (!flutDoc) { res.json({success: false, msg: 'Flut not liked'}); }
     else { res.json({success: true, flut: flutDoc}); }
   });
 });
@@ -119,7 +130,7 @@ exApp.post('/user/follow', function(req, res){
 });
 exApp.post('/user/unfollow', function(req, res){});
 
-// RUN IT
+/* RUN IT */
 const PORT_NO = process.env.PORT_NO || 3000;
 exApp.listen(PORT_NO, () => { console.log('LISTENING ON ', PORT_NO); });
 

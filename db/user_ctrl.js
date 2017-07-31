@@ -22,7 +22,7 @@ const UserSchema = new Schema({
 
 const User = mongoose.model('User', UserSchema);
 
-// CREATE USER  -- createUser
+/* CREATE USER  -- createUser */
 module.exports.createUser = function(userData, callback){
   let schemaData = {
     username: userData.username || "NOT_ENTERED",
@@ -34,18 +34,20 @@ module.exports.createUser = function(userData, callback){
   user.save(callback);
 };
 
-// READ USER    -- readUserById(Depr?), readUserByName
+/* READ USER    -- readUserById(Depr?), readUserByName */
 module.exports.readUserById = function(id, callback){
   User.findById(id).exec(callback);
 };
-module.exports.readUserByName = function(username, callback){
-  User.findOne({'username': username})
+module.exports.readUserByName = function(loginReq, callback){
+  User.findOne({'username': loginReq.username})
+    .where('password').equals(loginReq.password)
+    .select('_id username dispName email profPicUrl followers following joinDate')
     .populate('following.users', 'username dispName profPicUrl')
     .populate('followers.users', 'username dispName profPicUrl')
     .exec(callback); //.select('_id username')
 };
 
-// UPDATE USER  -- updateUser, followUser, unfollowUser
+/* UPDATE USER  -- updateUser, followUser, unfollowUser */
 module.exports.updateUser = function(userData, callback){
   let query = { _id: userData.id };
   let updateSet = {
@@ -73,6 +75,6 @@ module.exports.followUser = function(request, callback){
 };
 module.exports.unfollowUser = function(request, callback){};
 
-// DELETE USER  -- remove()
+/* DELETE USER */
 
 
