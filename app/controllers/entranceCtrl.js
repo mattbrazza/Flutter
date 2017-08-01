@@ -1,5 +1,5 @@
 // ENTRY CONTROLLER
-anApp.controller('entryCtrl',
+anApp.controller('entranceCtrl',
 ['userService','$scope','$http','$location','$timeout',
 function(userService, $scope, $http, $location, $timeout){
 

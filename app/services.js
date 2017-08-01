@@ -8,6 +8,7 @@ function($window, $location){
   function checkSupport() {
     try {
       if (storageType in $window && $window[storageType] !== null) {
+        webStorage = $window[storageType];
         return true;
       } else {
         console.error('Could not use LocalStorage...');
@@ -19,7 +20,7 @@ function($window, $location){
     }
   };
   checkSupport();
-
+  
   /* See if user is already logged-in/restore data if so */
   this.userData = JSON.parse(webStorage.getItem('flut.User-Data'));
   this.userState = (this.userData !== null) ? true : false;

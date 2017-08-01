@@ -50,7 +50,7 @@ module.exports.getFlutById = function(id, callback) {
 /* UPDATE FLUT -- likeFlut */
 module.exports.likeFlut = function(request, callback){
   let query = { _id: request.flut_id };
-  let updateSet = { 'likes._users': request.user_id };
+  let updateSet = { '_likes': request.user_id };
 
   // TODO: Check for already liked, and PASS
   Flut.findOneAndUpdate(query,{$push: updateSet},{new: true})

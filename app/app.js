@@ -4,27 +4,26 @@ const anApp = angular.module('flutter', ['ngRoute']);
 anApp.config(['$routeProvider', function($routeProvider){
   $routeProvider
   .when('/', {
-    templateUrl: 'app/entrance.html',
+    templateUrl: 'app/views/entrance.html',
     controller: 'entranceCtrl'
   })
 
   .when('/timeline', {
-    templateUrl: 'app/timeline.html',
+    templateUrl: 'app/views/timeline.html',
     controller: 'timelineCtrl'
   })
-
   .when('/profile/:username', {
-    templateUrl: 'app/timeline.html',
+    templateUrl: 'app/views/timeline.html',
     controller: 'timelineCtrl'
   })
  
   .when('/profile', {
-    templateUrl: 'app/profile.html',
+    templateUrl: 'app/views/profile.html',
     controller: 'profileCtrl'
   })
 
   .when('/logout', { // TODO: Do here, not in Ctrl
-    templateUrl: 'app/entrance.html',
+    templateUrl: 'app/views/entrance.html',
     controller: 'entranceCtrl'
 /*  redirectTo: function() {
       userService.logoutUser();

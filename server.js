@@ -21,7 +21,7 @@ exApp.get('/', function(req, res){
 
 exApp.post('/login', function(req, res){
   let loginRequest = req.body;
-  userController.readUserByName(loginRequest, function(err, userDoc) {
+  userController.loginUserCheck(loginRequest, function(err, userDoc) {
     if (err) {
       res.json({success: false, msg: 'Server error encountered'});    
       console.error(err);
@@ -122,6 +122,7 @@ exApp.get('/flut/id/:id', function(req, res){
 exApp.post('/flut/like', function(req, res){
   let flutRequest = req.body;
   flutController.likeFlut(flutRequest, function(err, flutDoc){
+console.log('Liked Flut: ', flutDoc);
     if (err) {
       res.json({success: false, msg: 'Server error encountered'});
       console.error(err);
