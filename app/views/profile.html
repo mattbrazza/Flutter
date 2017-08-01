@@ -1,5 +1,4 @@
 <div class="container"> <!-- Profile-Editor View -->
-
 <div class="row">
   <div ng-show="succMsg" class="alert alert-success"><span>{{ succMsg}}</span></div>
   <div ng-show="errMsg" class="alert alert-danger"><span>{{ errMsg }}</span></div>
@@ -17,10 +16,10 @@
         <br/>
         <p>
           <span class="glyphicon glyphicon-user"></span>
-          <span>Followers: {{ user.followers.count }}</span>
+          <span>Followers: {{ user.followers.length }}</span>
           &#160; &#160;
           <span class="glyphicon glyphicon-user"></span>
-          <span>Following: {{ user.following.count }}</span><br/>
+          <span>Following: {{ user.following.length }}</span><br/>
           <center><small><span class="glyphicon glyphicon-calendar"></span>
                 Joined: {{ user.joinDate | date:'dd MMMM yyyy' }}</small>
           </center>
@@ -80,44 +79,44 @@
     <div class="well">
       <center>
         <span class="glyphicon glyphicon-user"></span><b> Following
-            ({{ user.following.users.length }})</b>
+            ({{ user.following.length }})</b>
       </center>
-      <div ng-repeat="userT in user.following.users" class="media">
+      <div ng-repeat="userT in user.following.users">
         <div class="well well-sm">
           <a ng-href="#!/profile/{{ userT.username }}">
-          <div class="media-left media-middle">
+            <div class="media-left media-middle">
               <img ng-src="{{ userT.profPicUrl }}" alt="Profile Pic"
                 class="media-object img-rounded" style="height: 35px; width: 35px"/>
-          </div>
-          <div class="media-right media-middle">
-            <b>{{ userT.dispName }}</b><br/>
-            <i>{{ userT.username }}</i>
-          </div>
+            </div>
+            <div class="media-right media-middle">
+              <b>{{ userT.dispName }}</b><br/>
+              <i>{{ userT.username }}</i>
+            </div>
           </a>
-        </div>
-      </div>
-    </div>
+        </div> <!-- well -->
+      </div> <!-- ng-repeat -->
+    </div> <!-- well -->
 
     <div class="well">
       <center>
         <span class="glyphicon glyphicon-user"></span><b> Followers
-            ({{ user.followers.users.length }})</b>
+            ({{ user.followers.length }})</b>
       </center>
       <div ng-repeat="userT in user.followers.users">
         <div class="well well-sm">
           <a ng-href="#!/profile/{{ userT.username }}">
-          <div class="media-left media-middle">
+            <div class="media-left media-middle">
               <img ng-src="{{ userT.profPicUrl }}" alt="Profile Pic"
                 class="media-object img-rounded" style="height: 35px; width: 35px"/>
-          </div>
-          <div class="media-right media-middle">
-            <b>{{ userT.dispName }}</b><br/>
-            <i>{{ userT.username }}</i>
-          </div>
+            </div>
+            <div class="media-right media-middle">
+              <b>{{ userT.dispName }}</b><br/>
+              <i>{{ userT.username }}</i>
+            </div>
           </a>
-        </div>
-      </div>
-    </div>
+        </div> <!-- well -->
+      </div> <!-- ng-repeat -->
+    </div> <!-- well -->
   </div> <!-- col -->
 
 </div> <!-- row -->

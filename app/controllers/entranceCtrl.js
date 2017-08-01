@@ -3,7 +3,7 @@ anApp.controller('entryCtrl',
 ['userService','$scope','$http','$location','$timeout',
 function(userService, $scope, $http, $location, $timeout){
 
-  /* LOGOFF USER - NEEDS TO BE AT TOP
+  /* Log-off User - NEEDS to be at top
     TODO: Do this correctly in app.js */
   if ($location.path() === '/logout') {
     console.log('Logging off...');
@@ -11,13 +11,13 @@ function(userService, $scope, $http, $location, $timeout){
     $location.path('/');
   }
 
-  /* CHECK IF USER IS ALREADY LOGGED-IN */
+  /* Check if User is already logged-in */
   if (userService.isLoggedIn()){
     $scope.infoMsg = 'Already logged-in; redirecting...'
-    $timeout(() => { $location.path('/timeline'); }, 2000);
+    $timeout(() => { $location.path('/timeline'); }, 1000);
   }
 
-  /* LOGIN FUNCTION */
+  /* Verify,Submit log-in form */
   $scope.login = function(){
     $scope.errMsg = null;
     $scope.succMsg = null;
@@ -25,21 +25,19 @@ function(userService, $scope, $http, $location, $timeout){
       $scope.errMsg = 'Please fill in Username and Password';
       return;
     } else {}
-
     let request = {
       username: $scope.username,
       password: $scope.password // TODO: Encrypt before POST
     }
+
     $http.post('login', request).then(
       function(response){
         if (response.data.success) {
-          if (!userService.setUser(response.data.user)){
-            $scope.errMsg = 'Could not login user; please try again';
-          } else {
+          if (userService.setUser(response.data.user)){
             $scope.succMsg = 'Login successful; redirecting now...';
-            $timeout(function(){
-                $location.path('/timeline');
-            }, 2000);
+            $timeout(() => { $location.path('/timeline'); }, 1000);
+          } else {
+            $scope.errMsg = 'Could not login user; please try again';
           }
         } else { $scope.errMsg = response.data.msg || 'Server issue'; }
       },
@@ -48,10 +46,13 @@ function(userService, $scope, $http, $location, $timeout){
         console.error(err);
       }
     );
+
+    if ($scope.errMsg) { console.log('MyError: ', $scope.errMsg); }
+    return; // redirects at IF(RES.SUCC),IF(SETUSER)
   };
 
 
-  /* SIGN-UP FUNCTION */
+  /* Verify,Submit sign-up form */
   $scope.signup = function(){
     $scope.errMsgSu = null;
     if (!$scope.new_username || !$scope.new_email ||
@@ -62,29 +63,33 @@ function(userService, $scope, $http, $location, $timeout){
       $scope.errMsgSu = 'Passwords did not match; please try again';
       return;
     } else {}
-
     let request = {
         username: $scope.new_username,
         email: $scope.new_email,
         password: $scope.new_pwd1 // TODO: Encrypt before POST
     };
+
     $http.post('user/add', request).then(
       function(response){
         if (response.data.success) {
-          if (!userService.setUser(response.data.user)){
-            $scope.errMsgSu = 'Could sign-up user; please try again';
+          if (userService.setUser(response.data.user)){
+            $location.path('/profile'); // TODO: Add timeout/msg ?
           } else {
-            $location.path('/profile'); // + userService.getUser('username'));
+            $scope.errMsgSu = 'Could sign-up user; please try again';
           }
-        } else { $scope.errMsgSu = response.data.msg || 'Server issue'; }
+        } else {
+          $scope.errMsgSu = response.data.msg || 'Server issue';
+        }
       },
       function(err){
-        $scope.errMsgSu = 'Login error encountered; please try again';
+        $scope.errMsgSu = 'Signup error encountered; please try again';
         console.error(err);
       }
     );
+    
+    if ($scope.errMsgSu) { console.log('MyError: ', $scope.errMsgSu); }
+    return; // redirects at IF(RES.SUCC),IF(SETUSER)
   };
 
 }]); /* Entrance Controller */
-
 

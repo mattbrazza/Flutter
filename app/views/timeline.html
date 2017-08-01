@@ -1,5 +1,4 @@
 <div class="container"> <!-- Timeline/Profile View -->
-
 <div class="row">
   <div ng-show="succMsg" class="alert alert-success"><span>{{ succMsg}}</span></div>
   <div ng-show="errMsg" class="alert alert-danger"><span>{{ errMsg }}</span></div>
@@ -17,10 +16,10 @@
         <br/>
         <p>
           <span class="glyphicon glyphicon-user"></span>
-          <span>Followers: {{ profile.followers.count }}</span>
+          <span>Followers: {{ profile._followers.length }}</span>
           &#160; &#160;
           <span class="glyphicon glyphicon-user"></span>
-          <span>Following: {{ profile.following.count }}</span><br/>
+          <span>Following: {{ profile._following.length }}</span><br/>
           <center><small><span class="glyphicon glyphicon-calendar"></span>
                 Joined: {{ profile.joinDate | date:'dd MMMM yyyy' }}</small>
           </center>
@@ -37,7 +36,7 @@
 
   <div class="col-md-9">
     <!-- SUBMIT FLUT BOX -->
-    <div class="well" ng-show="!isProfile">
+    <div ng-show="!isProfile" class="well">
       <div class="row">
         <div class="col-md-10">
           <input ng-model="flutText" placeholder="Enter Flut" class="form-control" type="text"/>
@@ -73,14 +72,14 @@
             <div class="text-right">
               <button ng-click="likeFlut(this.flut)" class="btn btn-link">
                 <span class="glyphicon glyphicon-star-empty"></span>
-                <span>{{ flut.likes._users.length }}</span>
+                <span>{{ flut._likes.length }}</span>
               </button>
               &#160; &#160;
               <small>
                 <span class="glyphicon glyphicon-time"></span> 
                 {{ flut.postDate | date:"H:mm, dd-MMM ''''yy" }}
               </small>
-            </div> <!-- right -->
+            </div> <!-- text-right -->
           </div> <!-- media-body -->
         </div> <!-- well -->
       </div> <!-- ng-repeat -->

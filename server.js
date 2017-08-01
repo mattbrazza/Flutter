@@ -14,7 +14,7 @@ exApp.use(bodyParser.json());
 const flutController = require('./db/flut_ctrl.js');
 const userController = require('./db/user_ctrl.js');
 
-/* ROUTING - USERS/, FLUT/, ETC. */
+/* ROUTING -- /user/*, /flut/*, etc. */
 exApp.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
@@ -22,18 +22,70 @@ exApp.get('/', function(req, res){
 exApp.post('/login', function(req, res){
   let loginRequest = req.body;
   userController.readUserByName(loginRequest, function(err, userDoc) {
-    if (err) { 
+    if (err) {
       res.json({success: false, msg: 'Server error encountered'});    
       console.error(err);
-    } else if (!userDoc) {
-      res.json({success: false, msg: 'Wrong Username or Password'});    
-    } else {
-//      if (req.body.password === userDoc.password) {
-        res.json({success: true, user: userDoc});
-//      } else {
-//        res.json({success: false, msg: 'Password is Incorrect'});
-//      }
-    }
+    } else if (!userDoc) { res.json({success: false, msg: 'Wrong Username or Password'});    
+    } else { res.json({success: true, user: userDoc}); }
+  });
+});
+
+exApp.post('/user/add', function(req, res){
+  let userRequest = req.body;
+  userController.createUser(userRequest, function(err, userDoc){
+    if (err) {
+      res.json({success: false, msg: 'Server error encountered'});
+      console.error(err);
+    } else if (!userDoc) { res.json({success: false, msg: 'User not added'});
+    } else { res.json({success: true, user: userDoc}); }
+  });
+});
+
+exApp.get('/user/:username', function(req, res){
+  userController.readUserByName(req.params.username, function(err, userDoc){
+    if (err) {
+      res.json({success: false, msg: 'Server error encountered'});
+      console.error(err);
+    } else if (!userDoc) { res.json({success: false, msg: 'No User Found'});
+    } else { res.json({success: true, user: userDoc}); }
+  });
+});
+exApp.get('/user', function(req, res){}); // DEPRICATED
+
+exApp.post('/user/update', function(req, res){
+  let userRequest = req.body;
+  userController.updateUser(userRequest, function(err, userDoc){
+    if (err) {
+      res.json({success: false, msg: 'Server error encountered'});
+      console.error(err);
+    } else if (!userDoc) { res.json({success: false, msg: 'Updating doc issue'});
+    } else { res.json({success: true, user: userDoc}); }
+  });
+});
+
+exApp.post('/user/follow', function(req, res){
+  let followRequest = req.body;
+  userController.followUser(followRequest, function(err, userDoc){
+    if (err) {
+      res.json({success: false, msg: 'Server error encountered'});
+      console.error(err);
+    } else if (!userDoc) { res.json({success: false, msg: 'Following user issue'});
+    } else { res.json({success: true, user: userDoc}); }
+  });
+});
+exApp.post('/user/unfollow', function(req, res){});
+
+
+
+
+exApp.post('/flut/add', function(req, res){
+  let flutRequest = req.body;
+  flutController.createFlut(flutRequest, function(err, flutDoc){
+    if (err) {
+      res.json({success: false, msg: 'Server error encountered'});
+      console.error(err);
+    } else if (!flutDoc) { res.json({success: false, msg: 'Issue creating Flut'});
+    } else { res.json({success: true, flut: flutDoc}); }
   });
 });
 
@@ -42,22 +94,8 @@ exApp.get('/flut/all', function(req, res){
     if (err) {
       res.json({success: false, msg: 'Server error encountered'});
       console.error(err);
-    } else if (!flutDocs) {
-      res.json({success: false, msg: 'No fluts found'});
-    } else {
-      res.json({success: true, fluts: flutDocs});
-    }
-  });
-});
-
-exApp.get('/flut/id/:id', function(req, res){
-  flutController.getFlutById(req.params.id, function(err, flutDoc){
-    if (err) {
-      res.json({success: false, msg: 'Server error encountered'});
-      console.error(err);
-    } else if (!flutDoc) {
-      res.json({success: false, msg: 'No flut found with ID: ' + req.params.id});
-    } else { res.json({success: true, flut: flutDoc}); }
+    } else if (!flutDocs) { res.json({success: false, msg: 'No fluts found'});
+    } else { res.json({success: true, fluts: flutDocs}); }
   });
 });
 
@@ -66,18 +104,18 @@ exApp.get('/flut/user/:username', function(req, res){
     if (err) {
       res.json({success: false, msg: 'Server error encountered'});
       console.error(err);
-    }
-    else if (!flutDocs) { res.json({success: false, msg: 'No fluts found'}); }
-    else { res.json({success: true, fluts: flutDocs}); }
+    } else if (!flutDocs) { res.json({success: false, msg: 'No fluts found'});
+    } else { res.json({success: true, fluts: flutDocs}); }
   });
 });
 
-exApp.post('/flut/add', function(req, res){
-  let flutRequest = req.body;
-  flutController.createFlut(flutRequest, function(err, flutDoc){
-    if (err) { console.error(err); }
-    else if (!flutDoc) { res.json({success: false, msg: 'Issue creating Flut'}); }
-    else { res.json({success: true, flut: flutDoc}); }
+exApp.get('/flut/id/:id', function(req, res){
+  flutController.getFlutById(req.params.id, function(err, flutDoc){
+    if (err) {
+      res.json({success: false, msg: 'Server error encountered'});
+      console.error(err);
+    } else if (!flutDoc) { res.json({success: false, msg: 'No flut found with ID: ' + req.params.id});
+    } else { res.json({success: true, flut: flutDoc}); }
   });
 });
 
@@ -87,51 +125,12 @@ exApp.post('/flut/like', function(req, res){
     if (err) {
       res.json({success: false, msg: 'Server error encountered'});
       console.error(err);
-    }
-    else if (!flutDoc) { res.json({success: false, msg: 'Flut not liked'}); }
-    else { res.json({success: true, flut: flutDoc}); }
+    } else if (!flutDoc) { res.json({success: false, msg: 'Flut not liked'});
+    } else { res.json({success: true, flut: flutDoc}); }
   });
 });
-
-
-exApp.get('/user', function(req, res){}); // DEPRICATED
-exApp.get('/user/:username', function(req, res){
-  userController.readUserByName(req.params.username, function(err, userDoc){
-    if (err) { console.error(err); }
-    else if (!userDoc) { res.json({success: false, msg: 'No User Found'}); }
-    else { res.json({success: true, user: userDoc}); }
-  });
-});
-
-exApp.post('/user/add', function(req, res){
-  let userRequest = req.body;
-  userController.createUser(userRequest, function(err, userDoc){
-    if (err) { console.error(err); }
-    else { res.json({success: true, user: userDoc}); }
-  });
-});
-
-exApp.post('/user/update', function(req, res){
-  let userRequest = req.body;
-  userController.updateUser(userRequest, function(err, userDoc){
-    if (err) { console.error(err); }
-    else if (!userDoc) { res.json({success: false, msg: 'Updating doc issue'}); }
-    else { res.json({success: true, user: userDoc}); }
-  });
-});
-
-exApp.post('/user/follow', function(req, res){
-  let followRequest = req.body;
-  userController.followUser(followRequest, function(err, userDoc){
-    if (err) { console.error(err); }
-    else if (!userDoc) { res.json({success: false, msg: 'Following user issue'}); }
-    else { res.json({success: true, user: userDoc}); }
-  });
-});
-exApp.post('/user/unfollow', function(req, res){});
 
 /* RUN IT */
 const PORT_NO = process.env.PORT_NO || 3000;
 exApp.listen(PORT_NO, () => { console.log('LISTENING ON ', PORT_NO); });
-
 

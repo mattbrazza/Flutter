@@ -27,11 +27,15 @@ function(userService, $scope, $http, $location){
       dispName: $scope.user.dispName,
       tagline: $scope.user.tagline
     };
+
     $http.post('/user/update', request).then(
       function(response){
         if (response.data.success) {
-          userService.setUser(response.data.user);
-          $scope.succMsg = 'Successfully updated your User Profile';
+          if (userService.setUser(response.data.user)) {
+            $scope.succMsg = 'Successfully updated your User Profile';
+          } else {
+            $scope.errMsg = 'Error encountered while updating profile';
+          }
         } else {
           $scope.errMsg = response.data.msg || 'Server issue';
         }
@@ -42,6 +46,7 @@ function(userService, $scope, $http, $location){
       }
     );
 
+    if ($scope.errMsg) { console.log('MyError: ', $scope.errMsg); }
     return; // re-sets user in IF(RES.SUCC)
   };
 
@@ -49,5 +54,4 @@ function(userService, $scope, $http, $location){
   function updateProfilePic(){ return; };
 
 }]); /* Profile-Editor Controller */
-
 

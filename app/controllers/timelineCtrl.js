@@ -41,6 +41,7 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
         console.error(err);
       }
     );
+
     if ($scope.errMsg) { console.log('MyError: ', $scope.errMsg); }
     return; // $user.profile is set in IF(RES.SUCC)
   };
@@ -64,31 +65,29 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
         console.error(err);
       }
     );
-    
+
     if ($scope.errMsg) { console.log('MyError: ', $scope.errMsg); }
     return; // $scope.fluts is set in IF(RES.SUCC)
   };
 
   /* SUBMIT A NEW FLUT REQUEST */
   $scope.submitFlut = function() {
+    if (!$scope.flutText) { return; }
     $scope.errMsg = null;
     $scope.succMsg = null;
-    if (!$scope.flutText) {
-      $scope.errMsg = 'Cannot submit a empty Flut';
-      return;
-    }
     let request = {
       text: $scope.flutText,
       username: $scope.user.username,
       _user: $scope.user.id
     };
+
     $http.post('/flut/add', request).then(
       function(response){
         if (response.data.success) {
+          $scope.succMsg = 'Flut successfully submitted';
           $scope.flutText = ""; // reset Flut text field
           if ($scope.isProfile) { getFluts($scope.profile.username); }
           else { getFluts(); }
-          $scope.succMsg = 'Flut successfully submitted';
         } else {
           $scope.errMsg = response.data.msg || 'Server issue';
         }
@@ -98,13 +97,15 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
         console.error(err);
       }
     );
-    
+
     if ($scope.errMsg) { console.log('MyError: ', $scope.errMsg); }
     return; // flut submitted to DB
   };
 
   /* ADD LIKE TO FLUT - TODO: make persistent in DB */
+  // TODO: Disallow liking your own Flut ?
   $scope.likeFlut = function(flut){
+    $scope.errMsg = null;
     let request = {
       flut_id: flut._id,
       user_id: $scope.user.id
@@ -125,25 +126,23 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
       }
     );
 
-
-    flut.likes.count = flut.likes.count + 1; // += 1
-    flut.likes._users.push($scope.user._id);
+    if ($scope.errMsg) { console.log('MyError: ', $scope.errMsg); }
     return;
   };
 
   /* FOLLOW/UNFOLLOW USER */
   $scope.followUser = function(){
     if (!$scope.isProfile) { return; }
+    $scope.errMsg = null;
     let request = {
       profile_id: $scope.profile._id,
       user_id: $scope.user.id,
-      toFollow: true // true=follow, false=unfollow
     };
 
     $http.post('/user/follow', request).then(
       function(response){
         if (response.data.success) {
-          $scope.isFollowing = true;
+          $scope.isFollowing = true; // TODO: Make persistent
           $scope.succMsg = 'You are now following ' + $scope.profile.username;
           userService.setUser(response.data.user);
         } else {
@@ -156,11 +155,11 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
       }
     );
 
+    if ($scope.errMsg) { console.log('MyError: ', $scope.errMsg); }
     return; // re-sets user in IF(RES.SUCC)
   };
   $scope.unfollowUser = function(){
     if (!$scope.isProfile) { return; }
-    $scope.isFollowing = false;
     return;
   };
 
@@ -171,11 +170,10 @@ function(userService, $scope, $http, $location, $interval, $routeParams){
     } else {
       getFluts();
     }
-    $scope.errMsg = null;
+    /* $scope.errMsg = null;
     $scope.succMsg = null;
-    $scope.infoMsg = null;
-  }, 50000);
+    $scope.infoMsg = null; */
+  }, 10000);
 
 }]); /* Timeline Controller */
-
 
