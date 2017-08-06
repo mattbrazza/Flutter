@@ -1,53 +1,53 @@
 # Flutter
-### A Twitter Clone
-_A project to expand NodeJS and Web Dev. skills_
+_Project to create a Twitter Clone to practice the MEAN Stack_
 --- --- --- --- --- --- --- --- --- --- --- ---
-#### Libraries used:
+#### Frameworks/Libraries/etc. used:
 + NodeJS (with ExpressJS, Body-Parser)
-+ MongoDB (with MongooseJS)
 + AngularJS (with ngRoute)
++ MongoDB (with MongooseJS)
 + Bootstrap
 
-#### Goals:
-+ Expand knowledge of NodeJS (Vanilla vs ExpressJS)
-+ Expand knowledge of MongoDB vs MySQL (dynamic schema vs relational)
-+ Expand knowledge of NPM system and Github
-+ Creating functioning web-app that clones Twitter's base utilities
-+ + includes sign-up/log-in, timeline, profile, post to timeline
+#### Goals and Lessons Learned:
++ Create a functioning web-app that clones Twitter's base utilities
+  + include: Sign-up/Log-in, Posts/Timeline, Profile Editor, "Like"/"Follow"
++ Expand knowledge of NodeJS (VanillaJS vs NodeJS vs ExpressJS)
+  + Gain a better understanding of functions native to JS and what comes from a framework/library
+  + Gain a better understanding of JS's HTTP system and how Angular/Express simplifies it
+  + Gain a better understanding of Routing/Services/etc. in AngularJS
++ Expand knowledge of MongoDB (Schema Documents vs Relational Tables)
+  + Gain an understanding of data is stored documents
+  + Gain an understanding of how CRUD works in document databases
+  + Gain a sense for using Local/Session Storage, Cookies, and etc.
++ Expand knowledge of project work flows (NPM, Git/GitHub, Deployment)
+  + Try to adopt best practices (e.g., use config.js, use IIFE, promises, etc.)
+  + Gain a feeling for when to keep code together/concise or to be modular
+  + Let go of my resistance to using micro-services and not always "re-inventing the wheel" - though since I am trying to learn, I think it is appropriate here
 
-#### Lessons Learned:
-+ Established a better understanding of what is Vanilla JavaScript and what is a Framework
-+ Understand how ExpressJS simplifies and abstracts the core $HTTP system
-+ Read/watch various tutorials to understand current standards and approaches to common actions (e.g.,  use config.js, (req, res){}, use IIFE, etc.)
-+ Understand when to keep code together/concise and when to modularize for future expansion
-+ Better understand how MongoDB stores data (and how to query it)
-+ Better understand AngularJS and its features; expand on Routing, Services, etc.
-+ Understand Storage via Browser (not Cookies) and use within AngularJS
+#### Motivations and Explanation for Current State:
++ First and foremost, I built this all starting from an empty directory; I did not use and boiler plating, I just read all the tutorials of the frameworks/libraries I was using, read/watched tutorials and examples of the various aspects I wanted to implement, and just kept googling and searching Stack Overflow when I would get stuck
++ That being said, I do not want to learn encryption/security on my own, but rather just be taught and told the latest standards; for this reason (and that the site is not meant for production), I have not implemented any real credential testing and I am sure my local User Data storage is not safe
+  + I think the greatest security comes from the Open-Source opens that have people consistently testing and improving them and thus, I think this is a feature that should not be fully done in house, but start from the community
++ The styling and formatting is extremely minimal since I am focusing on the flow of data, not necessarily the displaying of it; I did decide to use this as an opportunity to use Bootstrap and learn the basics for use in future endeavors
++ I have not implemented the ability to do Profile Pictures because of the overhead of storing the image and creating a URL for it; currently using hard-coded lorem-pixel to simply this
++ Following/Followers is in serious limbo since I am still learning how to use document based databases and I still think in a relational table paradigm
 
-#### Challenges Faced:
-+ Not placing the carriage before the horse (i.e., styling before functionality)
-+ Fundamentally understanding routing and implementation between NodeJS/AngularJS
-+ Store form data to Database after button press -> better understand MongoDB
-+ Front-end design; learning basic Bootstrap so I can minimize time spent on UI
-+ Starting/gaining momentum while looking at the project as a whole and having come from working a full time job already 
-+ Understand better ng-route and templateUrl,controller
-+ Have functions run as soon as page loads and within $interval
-+ Dig deeper into how information is passed through functions and between Express and Angular
-+ CATCHING TYPOS IN A TIMELY MATTER!
-+ Local vs Session Storage and how to use within the context of AngularJS
-+ Working with "complex" structures stored in the Database; specifically pushing/removing users from the followers/following arrays that is a property of the user Schema
-
-#### Day-2 Thoughts:
-+ Modify styling to be responsive with screen sizes (optomize for mobile ?)
-+ Place $http requests/etc. into Factories within AngularJS
-+ Further security/encryption features
+#### Day-2 Ideas/Needs:
++ Modify styling to be responsive with screen sizes (optimize for mobile)
+  + Go through the HTML classes and be more verbose on sizing/layout
 + A11y implementation (i.e., accessibility)
-+ Allow profile privacy settings (show to all, only friends, etc.)
-+ Implement best practices for Angular (e.g., IIFE, ng-if vs ng-show, etc.)
-+ PenTest and check potential minification exploits
+  + Make sure using proper tag attributes and grouping of items
+  + Allow for modification of font styling/sizing
+  + Incorporate a library that allows for different language selections
++ Further security/encryption features
+  + Learn the latest standards in data encryption and how user data is managed
+  + Pen-Test and check potential exploits and security concerns
++ Allow for varying profile privacy (e.g., private, friends-only, everyone)
+  + Add user property that dictates what can be seen on the profile (ng-if)
++ Implement best practices (e.g., ng-if vs ng-show, direct functions vs promises, etc.)
 
 --- --- --- --- --- --- --- --- --- --- --- ---
-### Stream of Consciousness:
+#### Stream of Consciousness:
+_(General thoughts written down as I was coding)_
 The first task was to establish a workflow and directory structure for the project. I knew I wanted to use NodeJS and quickly after, I realized I wanted to use MongoDB so I could start to explore that database style as opposed to my usual use of MySQL and relational databases. Once I had that, I also knew I would be using NPM for NodeJS and that I would eventually get this all onto GitHub. Lastly, I realized that I would work to create a Twitter clone and got the name project name Flutter shortly after.  
 With that all decided, I created my Flutter/ directory and then touched a README.md, .gitignore, server.js, and index.html. Once that was done, I installed NodeJS, NPM, and Git onto my laptop and ran "npm init" which walked me through my first package.json. I then started reading the NodeJS documentation and walked through the Anatomy of an HTTP Transaction to get a Hello World going. I then spent some time to understand how this worked in pure NodeJS and how to serve up HTML pages via "fs=require('fs')".  
 Once I felt that I had enough knowledge of how Node servered pages, I used NPM to install my first dependency, ExpressJS; this helped me hide and manage what I had learned with simplified HTTP functions. I then worked for a bit to makes sure I understood how this abstraction worked, but quickly moved on since it seemed the best way to continue to learn was to build onto the app.  
@@ -63,5 +63,3 @@ While adding in the User Service, I started to think more about the URIs I was u
 At this point, I now have a website/webapp that allows a user to sign-up/log-in, view a timeline of all Fluts, got to profiles of specific users that will show only their Fluts, and the ability to log-off. There is definitely a lot that needs to be cleaned up and I still need to make "liking" a Flut persistent in the DB, but I think it will hold up as I move to the next item: allowing a user to modify their own profile.  
 The extreme basics of the site appear done, but serious work needs to be done to make sure User-Data is persistent and updates properly.  
 As I start to tackle the "follow a user" feature, I realize that it is a lot more complex than I originally thought. I have to figure out how to push/remove objects to the arrays stored as a property of the user, specfically doing that within the database. I not only have to do that for the logged-in user, but update the user that is being followed, to show that the logged-in user is **following** them. As I push forward, I think I will refactor this such that follow[ing|ers] is not _{users: [], count: INT}_, but rather just _users: []_ and remove _count_ and just use _.length_ where count was used before... Still fiddling with it and try to figure out an implementation that feels right.  
-
-
