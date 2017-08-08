@@ -47,7 +47,7 @@ _Project to create a Twitter Clone to practice the MEAN Stack_
 
 --- --- --- --- --- --- --- --- --- --- --- ---
 #### Stream of Consciousness:
-_(General thoughts written down as I was coding)_
+_(General thoughts written down as I was coding)_  
 The first task was to establish a workflow and directory structure for the project. I knew I wanted to use NodeJS and quickly after, I realized I wanted to use MongoDB so I could start to explore that database style as opposed to my usual use of MySQL and relational databases. Once I had that, I also knew I would be using NPM for NodeJS and that I would eventually get this all onto GitHub. Lastly, I realized that I would work to create a Twitter clone and got the name project name Flutter shortly after.  
 With that all decided, I created my Flutter/ directory and then touched a README.md, .gitignore, server.js, and index.html. Once that was done, I installed NodeJS, NPM, and Git onto my laptop and ran "npm init" which walked me through my first package.json. I then started reading the NodeJS documentation and walked through the Anatomy of an HTTP Transaction to get a Hello World going. I then spent some time to understand how this worked in pure NodeJS and how to serve up HTML pages via "fs=require('fs')".  
 Once I felt that I had enough knowledge of how Node servered pages, I used NPM to install my first dependency, ExpressJS; this helped me hide and manage what I had learned with simplified HTTP functions. I then worked for a bit to makes sure I understood how this abstraction worked, but quickly moved on since it seemed the best way to continue to learn was to build onto the app.  
