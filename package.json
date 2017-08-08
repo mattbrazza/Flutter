@@ -1,6 +1,6 @@
 {
   "name": "flutter",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "A Twitter clone to learn stuff",
   "main": "server.js",
   "repository": {
